@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	 version="3.1">
+    <context-param>
+        <description>La chaine du pilote JDBC utilisé pour se connecter à la BD.</description>
+        <param-name>piloteJdbc</param-name>
+        <param-value>com.mysql.jdbc.Driver</param-value>
+    </context-param>
+    <context-param>
+        <description>L'URL de la BD pour les connexions JDBC.</description>
+        <param-name>urlBd</param-name>
+        <param-value>jdbc:mysql://localhost/tictactoe?user=root&amp;password=root</param-value>
+    </context-param>
+    <listener>
+        <listener-class>com.jcfdb.listeners.EcouteurApplication</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.jcfdb.listeners.EcouteurSession</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>controleur</servlet-name>
+        <servlet-class>com.jcfdb.web.mvc.ControleurFrontal</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>login</servlet-name>
+        <servlet-class>com.jcfdb.web.mvc.Login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>com.jcfdb.web.mvc.Logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>donneesJoueur</servlet-name>
+        <servlet-class>com.jcfdb.web.mvc.GetDatas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>invitation</servlet-name>
+        <servlet-class>com.jcfdb.web.mvc.Inviter</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>jeu</servlet-name>
+        <servlet-class>com.jcfdb.web.mvc.Jouer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>demarragePartie</servlet-name>
+        <servlet-class>com.jcfdb.web.mvc.StartPartie</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>controleur</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>donneesJoueur</servlet-name>
+        <url-pattern>/getDatas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/signout</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            3
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
