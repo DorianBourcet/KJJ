@@ -15,6 +15,7 @@
         <div id="main">
             <jsp:include page="accueil.jsp" />
             <jsp:include page="inscription.jsp"/>
+            <jsp:include page="login.jsp"/>
         </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

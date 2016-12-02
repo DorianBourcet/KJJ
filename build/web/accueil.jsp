@@ -4,9 +4,9 @@
     Author     : jycy
 --%>
 
-<div id="Acceuil">
+<div id="Accueil">
     <div id="Message" class="text-xs-center">
-        <h1 id="Titre-accueil" >Welcome! Feel the power.</h1>
+        <h1 class="Titre-accueil" >Welcome! Feel the power.</h1>
         <p id="Message-accueil">
             {Message d'accueil ici}
         </p>
