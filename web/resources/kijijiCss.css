@@ -17,8 +17,12 @@ and open the template in the editor.
     border-bottom-color: #c3c3c3;
     border-radius: 0px;
 }
-#Titre-accueil{
+.Titre-accueil{
     margin-top: 150px;
+    font-size: 56px;
+}
+.Titre-main{
+    margin-top: 100px;
     font-size: 56px;
 }
 #Message-accueil{
@@ -40,10 +44,10 @@ and open the template in the editor.
 #main{
     min-height: 50vh;
 }
-#Acceuil{
+#Accueil,#inscription{
     display: none;
 }
-#form-inscrip{
+#form-inscrip,#form-login{
     padding-top: 30px;
     padding-left: 50px;
     padding-right: 50px;

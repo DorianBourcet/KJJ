@@ -6,8 +6,8 @@
 
 <div id="inscription">
     <div class="container">
+        <h1 class="Titre-main text-xs-center">Inscription</h1>
         <form id="form-inscrip">
-            
             <div class="form-group row">
               <label for="inscrip-username" class="col-xs-2 col-form-label">Username</label>
               <div class="col-xs-10">
@@ -76,7 +76,7 @@
             <div class="form-group row">
               <label for="inscrip-app" class="col-xs-2 col-form-label">Appartement</label>
               <div class="col-xs-10">
-                <input class="form-control" type="number" placeholder="Numéro d'appartement" id="inscrip-app">
+                <input class="form-control" type="text" placeholder="Numéro d'appartement" id="inscrip-app">
               </div>
             </div> 
             
@@ -98,10 +98,19 @@
               <label for="inscrip-province" class="col-xs-2 col-form-label">Province</label>
               <div class="col-xs-10">
                 <select class="custom-select" id="inscrip-province">
-                  <option selected>QC</option>
-                  <option value="1">ON</option>
-                  <option value="2"></option>
-                  <option value="3">Three</option>
+                  <option selected value="AB">Alberta</option>
+                  <option value="BC">Colombie-Britannique</option>
+                  <option value="IPE">Île-du-Prince-Édouard</option>
+                  <option value="MB">Manitoba</option>
+                  <option value="NB">Nouveau-Brunswick</option>
+                  <option value="NS">Nouvelle-Écosse</option>
+                  <option value="ON">Ontario</option>
+                  <option value="QC">Québec</option>
+                  <option value="SK">Saskatchewan</option>
+                  <option value="NL">Terre-Neuve-et-Labrador</option>
+                  <option value="NU">Nunavut</option>
+                  <option value="NT">Territoires du Nord-Ouest</option>
+                  <option value="YT">Yukon</option>
                 </select>
               </div>
             </div>
