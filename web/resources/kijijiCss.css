@@ -44,7 +44,7 @@ and open the template in the editor.
 #main{
     min-height: 50vh;
 }
-#Accueil,#inscription{
+#Accueil,#inscription,#login,#Exploration{
     display: none;
 }
 #form-inscrip,#form-login{
@@ -52,3 +52,42 @@ and open the template in the editor.
     padding-left: 50px;
     padding-right: 50px;
 }
+.a-card:hover{
+    text-decoration: none;
+    color: #f4645f;
+}
+.a-card{
+    color: #373a3c;
+}
+#Exploration{
+    width: 100%;
+    padding-top: 100px;
+}
+.a-card:visited{
+    text-decoration: none;
+    color: #373a3c;
+}
+.a-card:focus{
+    text-decoration: none;
+    color: #f4645f;
+}
+#photo{
+    min-height: 300px;
+    border: solid 1px #c3c3c3;
+}
+#art-row{
+    width: 100%;
+}
+#Article{
+   padding-top: 100px; 
+}
+@media (max-width:767px){
+    #art-ajouter{ 
+        text-align: center
+    }
+    #art-button-ajouter{
+        width: 80%;
+        height: 100px;
+    }
+}
+

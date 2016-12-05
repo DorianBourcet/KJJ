@@ -4,4 +4,9 @@
  * and open the template in the editor.
  */
 
-
+$(function(){
+   $("#dash").click(function(){
+       if($("#Article").css("Display")==="block") $("#Article").fadeOut();
+       $("#Exploration").fadeIn();
+   }); 
+});
