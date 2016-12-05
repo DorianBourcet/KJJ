@@ -22,6 +22,10 @@ public class Adresse {
 
     public Adresse() {
     }
+
+    public Adresse(String pays) {
+        this.pays = pays;
+    }
     
     public Adresse(String numero, String rue1, String rue2, String appartement, String ville, String codePostal, String province, String pays) {
         this.numero = numero;

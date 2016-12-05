@@ -38,8 +38,10 @@ public class Membre {
         this.prenom = prenom;
         this.adresse = adresse;
     }
-    
-    
+
+    public Membre(Adresse adresse) {
+        this.adresse = adresse;
+    }
 
     public int getId() {
         return id;
@@ -110,7 +112,7 @@ public class Membre {
     public String toString() {
         return id+"\n"
                 +prenom+" "+nom+"\n"
-                /*+adresse.toString()*/;
+                +adresse.toString();
     }
 
     
