@@ -5,6 +5,8 @@
 package com.kjj.web;
 
 import com.atoudeft.jdbc.Connexion;
+import com.kjj.entites.Membre;
+import com.kjj.implementations.MembreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -35,17 +37,16 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+        /*PrintWriter out = response.getWriter();
         out.println("servlet login");
         request.getSession(true).setAttribute("connecte", "Toto");
-        out.println(request.getSession().getAttribute("connecte")+" vous êtes connecté !");
-        /*String  u = request.getParameter("username"),
+        out.println(request.getSession().getAttribute("connecte")+" vous êtes connecté !");*/
+        String  u = request.getParameter("username"),
                 p = request.getParameter("password");
         if (u==null || u.trim().equalsIgnoreCase(""))
         {
-            //Utilisateur inexistant
-            request.setAttribute("message", "Username obligatoire");
-            RequestDispatcher r = this.getServletContext().getRequestDispatcher("/Login.jsp");
+            request.setAttribute("message", "Nom d'utilisateur obligatoire");
+            RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp");
             r.forward(request, response);
             return;
         }
@@ -58,30 +59,26 @@ public class Login extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
-        //UserDao dao = new UserDao(Connexion.getInstance());
-        //User user = dao.read(u.trim());
+        MembreDao dao = new MembreDao(Connexion.getInstance());
+        Membre m = dao.read(u.trim());
         
-        if (false) // A changer !!!!!!!!!
+        if (m == null)
         {
+            // Membre inconnu dans la BD
             out.print("0");
         }
-        else if (true)
+        else if (!m.getPassword().equals(p))
         {
+            // Mot de pase erronné
             out.print("2");
         }
         else
         {
-            //connexion OK
+            // Connexion OK
             HttpSession session = request.getSession(true);
             session.setAttribute("connecte", u);
-            ServletContext appli = session.getServletContext();
-            List listeJ = (ArrayList)appli.getAttribute("listeJoueurs");
-            Iterator itr = listeJ.iterator();
-            System.out.println("Joueurs connectes :");
-            while (itr.hasNext())
-                System.out.println("- "+itr.next());
             out.print("1");
-        }*/
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
