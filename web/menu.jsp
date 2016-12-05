@@ -10,7 +10,7 @@
     <a class="navbar-brand" href="#">Kijiji 2.0</a>
     <ul class="nav navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#">Dashboard <span class="sr-only"></span></a>
+        <a class="nav-link" href="#" id="dash">Dashboard <span class="sr-only"></span></a>
       </li>
     </ul>
     <ul class="nav navbar-nav float-lg-right">
