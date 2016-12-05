@@ -123,4 +123,33 @@ public class MembreDao extends Dao<Membre> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public Membre find(int id) {
+        String strId = Integer.toString(id);
+        PreparedStatement stm = null;
+        try {
+            stm = cnx.prepareStatement("SELECT * FROM membre WHERE id = ?");
+            stm.setString(1,strId);
+            ResultSet r = stm.executeQuery();
+            if (r.next()) {
+                Membre m = MembreFactory.getMembre();
+                m.setId(r.getInt("id"));  
+                m.setUsername(r.getString("username"));
+                r.close();
+                stm.close();
+                return m;
+            }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+    
 }

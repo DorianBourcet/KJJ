@@ -25,6 +25,10 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
+        <servlet-name>changements</servlet-name>
+        <servlet-class>com.kjj.web.ControleurChangements</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>connexion</servlet-name>
         <servlet-class>com.kjj.web.Login</servlet-class>
     </servlet>

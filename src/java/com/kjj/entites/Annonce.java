@@ -13,10 +13,10 @@ import java.sql.Timestamp;
  */
 public class Annonce {
     
-    private int id;
+    private int id, quantite;
     private String titre, description, etatObjet;
     private Adresse adresse;
-    private String[][] champs; // <À repenser, peut-être avec Map
+    private String[][] champs; // < À repenser, peut-être avec Map
     private int idMembre;
     private Timestamp dateCreation;
     private boolean expiree;
@@ -42,6 +42,14 @@ public class Annonce {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
     }
 
     public String getTitre() {

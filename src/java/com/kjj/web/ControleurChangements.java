@@ -6,10 +6,7 @@ package com.kjj.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author dbourcet
  */
-public class Contact extends HttpServlet {
+public class ControleurChangements extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -38,16 +35,8 @@ public class Contact extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String expediteur = request.getParameter("expediteur");
-        String destinataire = request.getParameter("destinataire");
-        String contenu = request.getParameter("contenu");
         
-        Calendar calendrier = Calendar.getInstance();
-        Date maintenant = calendrier.getTime();
-        Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
-        PrintWriter out = response.getWriter();
-        out.println("servlet contact (envoi de message entre les membres) ");
-        out.println(currentTimestamp);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

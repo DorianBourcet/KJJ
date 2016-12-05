@@ -25,10 +25,10 @@ public class TestBDMembre {
         // TODO code application logic here
         Connexion.setUrl("jdbc:mysql://localhost/kijiji2?user=root&password=root");
         MembreDao md = new MembreDao(Connexion.getInstance());
-        Membre m = md.read("Dodo");
+        Membre m = md.find(23);
         System.out.println(m.toString());
         
-        HashMap donneesObligatoires = new HashMap();
+        /*HashMap donneesObligatoires = new HashMap();
         donneesObligatoires.put("usr",m.getUsername());
         donneesObligatoires.put("pwd",m.getPassword());
         donneesObligatoires.put("nom",m.getNom());
@@ -49,7 +49,7 @@ public class TestBDMembre {
         }
         else
             // Membre créé
-            System.out.println("créé");
+            System.out.println("créé");*/
     }
     
 }
