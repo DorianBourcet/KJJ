@@ -32,24 +32,12 @@ public class Logout extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+        /*PrintWriter out = response.getWriter();
         out.println("servlet logout");
-        out.println("Bye !");
+        out.println("Bye !");*/
         request.getSession().invalidate();
-        /*//déconnexion
-        HttpSession session = request.getSession(true);
-        //GestionnaireJeu.enleverJoueur(request);
-        //session.removeAttribute("connecte");
-        System.out.println("Déconnexion de "+session.getAttribute("connecte"));
-        session.invalidate();
-        ServletContext appli = session.getServletContext();
-            List listeJ = (ArrayList)appli.getAttribute("listeJoueurs");
-            Iterator itr = listeJ.iterator();
-            System.out.println("Joueurs connectes :");
-            while (itr.hasNext())
-                System.out.println("- "+itr.next());
         RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp");
-        r.forward(request, response);*/
+        r.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

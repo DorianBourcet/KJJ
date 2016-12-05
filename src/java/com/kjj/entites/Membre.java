@@ -18,6 +18,16 @@ public class Membre {
     public Membre() {
     }
 
+    public Membre(String username, String password, String nom, String prenom,
+            String email, Adresse adresse) {
+        this.username = username;
+        this.password = password;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.adresse = adresse;
+    }
+
     public Membre(int id) {
         this.id = id;
     }
