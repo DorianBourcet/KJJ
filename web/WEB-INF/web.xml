@@ -16,6 +16,9 @@
     <listener>
         <listener-class>com.kjj.listeners.EcouteurSession</listener-class>
     </listener>
+    <listener>
+        <listener-class>com.kjj.listeners.EcouteurRequete</listener-class>
+    </listener>
     <servlet>
         <servlet-name>controleur</servlet-name>
         <servlet-class>com.kjj.web.ControleurFrontal</servlet-class>
