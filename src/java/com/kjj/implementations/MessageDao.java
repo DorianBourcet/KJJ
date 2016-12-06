@@ -68,6 +68,7 @@ public class MessageDao extends Dao<MessagePrive> {
                 m.setIdExpediteur(r.getInt("idExpediteur"));  
                 m.setIdDestinataire(r.getInt("idDestinataire"));  
                 m.setContenu(r.getString("contenu"));
+                m.setDate(r.getTimestamp("date"));
                 r.close();
                 stm.close();
                 return m;
