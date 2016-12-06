@@ -44,7 +44,7 @@ and open the template in the editor.
 #main{
     min-height: 50vh;
 }
-#Accueil,#inscription,#login,#Exploration{
+#inscription,#login,#Exploration,#Article,#menu-membre,#dash{
     display: none;
 }
 #form-inscrip,#form-login{
@@ -89,5 +89,12 @@ and open the template in the editor.
         width: 80%;
         height: 100px;
     }
+}
+
+#inscrire-submit{
+    margin-bottom: 100px;
+}
+.pointer{
+    cursor: pointer;
 }
 

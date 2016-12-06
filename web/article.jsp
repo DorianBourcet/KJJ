@@ -6,7 +6,6 @@
 
 <div id="Article">
     <div id="photo" class="col-md-5">
-
     </div>
     <span class="col-md-7 text-md-right text-xs-center">
         <h2 id="art-titre">{titre article}</h2>
