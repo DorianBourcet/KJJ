@@ -29,6 +29,13 @@ public class MessagePrive {
         this.date = date;
     }
 
+    public MessagePrive(int idExpediteur, int idDestinataire, String contenu, Timestamp date) {
+        this.idExpediteur = idExpediteur;
+        this.idDestinataire = idDestinataire;
+        this.contenu = contenu;
+        this.date = date;
+    }
+
     public int getId() {
         return id;
     }
