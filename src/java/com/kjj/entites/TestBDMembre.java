@@ -33,8 +33,11 @@ public class TestBDMembre {
         Date maintenant = calendrier.getTime();
         Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
         MessagePrive mp = new MessagePrive(24,25,"Ceci est un message test hahahah",currentTimestamp);
-        md.create(mp);
-        System.out.println("done");
+        //md.create(mp);
+        
+        MessagePrive test = md.read("1");
+        if(test != null)
+            System.out.println("done");
         
         /*HashMap donneesObligatoires = new HashMap();
         donneesObligatoires.put("usr",m.getUsername());

@@ -40,23 +40,23 @@ public class ControleurFrontal extends HttpServlet {
                 case "editer":
                     r = this.getServletContext().getNamedDispatcher("editionAnnonce");
                     r.forward(request, response);
-                    break;
+                    return;
                 case "commenter":
                     r = this.getServletContext().getNamedDispatcher("commentaireAnnonce");
                     r.forward(request, response);
-                    break;
+                    return;
                 case "modifierProfil":
                     r = this.getServletContext().getNamedDispatcher("profilCompte");
                     r.forward(request, response);
-                    break;
+                    return;
                     case "contacter":
                     r = this.getServletContext().getNamedDispatcher("contact");
                     r.forward(request, response);
-                    break;
+                    return;
                 case "logout":
                     r = this.getServletContext().getNamedDispatcher("deconnexion");
                     r.forward(request, response);
-                    break;
+                    return;
             }
         }
         else if (session.getAttribute("connecte") == null) {
@@ -64,29 +64,30 @@ public class ControleurFrontal extends HttpServlet {
                 case "login":
                     r = this.getServletContext().getNamedDispatcher("connexion");
                     r.forward(request, response);
-                    break;
+                    return;
                 case "creerCompte":
                     r = this.getServletContext().getNamedDispatcher("inscription");
                     r.forward(request, response);
-                    break;
+                    return;
             }
         }
         switch (action) {
             case "explorer":
                 r = this.getServletContext().getNamedDispatcher("exploration");
                 r.forward(request, response);
-                break;
+                return;
             case "consulter":
                 r = this.getServletContext().getNamedDispatcher("consultationAnnonce");
                 r.forward(request, response);
-                break;
+                return;
             case "rechercher":
                 r = this.getServletContext().getNamedDispatcher("recherche");
                 r.forward(request, response);
-                break;
+                return;
             default:
                 r = this.getServletContext().getRequestDispatcher("/index.jsp");
                 r.forward(request, response);
+                return;
         }
     }
 
