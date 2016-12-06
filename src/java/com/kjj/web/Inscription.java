@@ -45,21 +45,28 @@ public class Inscription extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /*PrintWriter out = response.getWriter();
-        out.println("servlet inscription. Bienvenue !");*/
+        PrintWriter out = response.getWriter();
+
         String  aNum = request.getParameter("adr_numero"),
-                aRu1 = request.getParameter("adr_rue1"),
-                aRu2 = request.getParameter("adr_rue2"),
-                aApp = request.getParameter("adr_appartement"),
-                aVil = request.getParameter("adr_ville"),
-                aCPl = request.getParameter("adr_codePostal"),
-                aPce = request.getParameter("adr_province");
+            aRu1 = request.getParameter("adr_rue1"),
+            aRu2 = request.getParameter("adr_rue2"),
+            aApp = request.getParameter("adr_appartement"),
+            aVil = request.getParameter("adr_ville"),
+            aCPl = request.getParameter("adr_codePostal"),
+            aPce = request.getParameter("adr_province");
         HashMap donneesObligatoires = new HashMap();
         donneesObligatoires.put("usr",request.getParameter("username"));
         donneesObligatoires.put("pwd",request.getParameter("password"));
+        donneesObligatoires.put("pwd2",request.getParameter("password2"));
         donneesObligatoires.put("nom",request.getParameter("nom"));
         donneesObligatoires.put("prn",request.getParameter("prenom"));
         donneesObligatoires.put("ema",request.getParameter("email"));
+        if (request.getParameter("password").equals(request.getParameter("password2"))) {
+            request.setAttribute("message", "Les champs obligatoires doivent être complétés");
+            RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp");
+            r.forward(request, response);
+            return;
+        }
         Set set = donneesObligatoires.entrySet();
         Iterator itr = set.iterator();
         while(itr.hasNext()) {
@@ -71,14 +78,13 @@ public class Inscription extends HttpServlet {
                 return;
             }
         }
-        
+
         try {
             Class.forName(this.getServletContext().getInitParameter("piloteJdbc"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        PrintWriter out = response.getWriter();
-        
+
         Membre m = MembreFactory.getMembre(
                 (String)donneesObligatoires.get("usr"), 
                 (String)donneesObligatoires.get("pwd"),
@@ -86,10 +92,10 @@ public class Inscription extends HttpServlet {
                 (String)donneesObligatoires.get("prn"), 
                 (String)donneesObligatoires.get("ema"), aNum, aRu1, aRu2, aApp,
                 aVil, aCPl, aPce);
-        
+
         Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
         MembreDao dao = new MembreDao(Connexion.getInstance());
-        
+
         if (!dao.create(m))
         {
             // Erreur lors de la création (membre existant)

@@ -7,6 +7,10 @@ package com.kjj.entites;
 
 import com.atoudeft.jdbc.Connexion;
 import com.kjj.implementations.MembreDao;
+import com.kjj.implementations.MessageDao;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,9 +28,13 @@ public class TestBDMembre {
     public static void main(String[] args) {
         // TODO code application logic here
         Connexion.setUrl("jdbc:mysql://localhost/kijiji2?user=root&password=root");
-        MembreDao md = new MembreDao(Connexion.getInstance());
-        Membre m = md.find(23);
-        System.out.println(m.toString());
+        MessageDao md = new MessageDao(Connexion.getInstance());
+        Calendar calendrier = Calendar.getInstance();
+        Date maintenant = calendrier.getTime();
+        Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
+        MessagePrive mp = new MessagePrive(24,25,"Ceci est un message test hahahah",currentTimestamp);
+        md.create(mp);
+        System.out.println("done");
         
         /*HashMap donneesObligatoires = new HashMap();
         donneesObligatoires.put("usr",m.getUsername());
