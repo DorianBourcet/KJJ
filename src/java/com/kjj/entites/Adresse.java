@@ -27,6 +27,17 @@ public class Adresse {
         this.pays = pays;
     }
     
+    public Adresse(String ville, String codePostal, String province, String pays){
+        this.numero = "";
+        this.rue1 = "";
+        this.rue2 = "";
+        this.appartement = "";
+        this.ville = ville;
+        this.codePostal = codePostal;
+        this.province = province;
+        this.pays = pays;
+    }
+            
     public Adresse(String numero, String rue1, String rue2, String appartement, String ville, String codePostal, String province, String pays) {
         this.numero = numero;
         this.rue1 = rue1;
@@ -37,6 +48,7 @@ public class Adresse {
         this.province = province;
         this.pays = pays;
     }
+    
 
     /*public Adresse(String pays) {
         this.pays = pays;
