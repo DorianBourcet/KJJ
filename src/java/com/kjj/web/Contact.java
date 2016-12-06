@@ -8,6 +8,7 @@ import com.atoudeft.jdbc.Connexion;
 import com.kjj.entites.Membre;
 import com.kjj.entites.MessagePrive;
 import com.kjj.implementations.MembreDao;
+import com.kjj.implementations.MessageDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
@@ -44,8 +45,8 @@ public class Contact extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String expediteur = (String)request.getSession().getAttribute("connecte");
-        String destinataire = request.getParameter("destinataire");
+        System.out.println("Début de servlet contact");
+        int destinataire = Integer.parseInt((String)request.getParameter("destinataire"));
         String contenu = request.getParameter("contenu");
         PrintWriter out = response.getWriter();
         try {
@@ -55,11 +56,12 @@ public class Contact extends HttpServlet {
         }
         
         Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
-        MembreDao dao = new MembreDao(Connexion.getInstance());
+        MembreDao memDao = new MembreDao(Connexion.getInstance());
         //Membre m = dao.read(u.trim());
         
-        Membre membreExp = dao.read(expediteur);
-        Membre membreDes = dao.read(destinataire);
+        Membre membreExp = 
+                memDao.read((String)request.getSession().getAttribute("connecte"));
+        Membre membreDes = memDao.find(destinataire);
         if (membreDes == null || membreExp == null)
             out.println(false);
         else {
@@ -69,10 +71,20 @@ public class Contact extends HttpServlet {
             MessagePrive mp = new MessagePrive(membreExp.getId(),
                     membreDes.getId(), contenu, currentTimestamp);
             
-            // Ajouter le code pour l'invocation du DAO message.
-
-            out.println("servlet contact (envoi de message entre les membres) ");
-            out.println(currentTimestamp);
+            MessageDao messDao = new MessageDao(Connexion.getInstance());
+            if (!messDao.create(mp))
+            {
+                // Erreur lors de la création du message
+                out.print(false);
+            }
+            else {
+                // Message créé
+                request.setAttribute("idDes", membreDes.getId());
+                RequestDispatcher rd = this.getServletContext()
+                    .getNamedDispatcher("changements");
+                rd.include(request, response);
+                out.print(true);
+            }
         }
     }
 
