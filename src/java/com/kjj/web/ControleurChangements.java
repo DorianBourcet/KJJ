@@ -4,6 +4,8 @@
  */
 package com.kjj.web;
 
+import com.atoudeft.jdbc.Connexion;
+import com.kjj.implementations.MembreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -35,8 +37,20 @@ public class ControleurChangements extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        System.out.println("Servlet changements");
+        String uri = request.getRequestURI();
+        String substring[] = uri.split("/");
+        String action = substring[substring.length-1].replace(".do", "");
+        switch (action) {
+            case "contacter":
+                Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
+                MembreDao memDao = new MembreDao(Connexion.getInstance());
+                //int idDestinataire = Integer.parseInt((String)request.getAttribute("idDes"));
+                int destinataire = Integer.parseInt((String)request.getParameter("destinataire"));
+                memDao.notifier(destinataire);
+                return;
+            default:
+                return;
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

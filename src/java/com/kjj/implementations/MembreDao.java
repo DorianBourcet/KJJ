@@ -152,4 +152,29 @@ public class MembreDao extends Dao<Membre> {
         return null;
     }
     
+    public boolean notifier(int id) {
+        Statement stm = null;
+        try {
+            String req = "UPDATE membre SET quoideneuf = '1'"
+                    + " WHERE id = '" + id + "'";
+            stm = cnx.createStatement();
+            int n = stm.executeUpdate(req);
+            if (n > 0) {
+                stm.close();
+                return true;
+            }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+    
 }
