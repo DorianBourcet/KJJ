@@ -77,7 +77,6 @@ public class Login extends HttpServlet {
             // Connexion OK
             HttpSession session = request.getSession(true);
             session.setAttribute("connecte", u);
-            request.setAttribute("haha", "haha");
             RequestDispatcher rd = this.getServletContext()
                     .getNamedDispatcher("changements");
             rd.include(request, response);
