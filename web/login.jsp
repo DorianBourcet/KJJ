@@ -10,16 +10,17 @@
             <div class="form-group row">
               <label for="login-username" class="col-xs-2 col-form-label">Username</label>
               <div class="col-xs-10">
-                <input class="form-control" type="text" placeholder="Username" id="login-username">
+                <input class="form-control" name="username" type="text" placeholder="Username" id="login-username">
               </div>
             </div>
            
             <div class="form-group row">
               <label for="login-password" class="col-xs-2 col-form-label">Password</label>
               <div class="col-xs-10">
-                <input class="form-control" type="password" placeholder="password" id="login-password">
+                <input class="form-control" name="password" type="password" placeholder="password" id="login-password">
               </div>
             </div>
+            <input id="login-submit" type="button" class="btn btn-lg btn-outline-danger btn-block" value="connecter">
         </form>
     </div>
 </div>
