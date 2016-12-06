@@ -17,6 +17,7 @@ public class MessagePrive {
     private int idExpediteur, idDestinataire;
     private String contenu;
     private Timestamp date;
+    private int lu;
 
     public MessagePrive() {
     }
@@ -74,6 +75,14 @@ public class MessagePrive {
 
     public void setDate(Timestamp date) {
         this.date = date;
+    }
+    
+    public String toJSON() {
+        return "{\"idExpediteur\":\""+this.idExpediteur
+                +"\",\"idDestinataire\":\""+this.idDestinataire
+                +"\",\"contenu\":\""+this.contenu
+                +"\",\"date\":\""+this.date
+                +"\"}";
     }
 
     
