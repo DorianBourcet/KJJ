@@ -22,8 +22,21 @@ public class Annonce {
     private boolean expiree;
 
     public Annonce() {
+        this.adresse = new Adresse();
     }
-
+    
+    public Annonce(int id, String titre, String description, String etatObjet, Adresse adresse, int idMembre, Timestamp dateCreation, boolean expiree) {
+        this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.etatObjet = etatObjet;
+        this.adresse = adresse;
+        //this.champs = [][]champs;
+        this.idMembre = idMembre;
+        this.dateCreation = dateCreation;
+        this.expiree = expiree;
+    }
+        
     public Annonce(int id, String titre, String description, String etatObjet, Adresse adresse, String[][] champs, int idMembre, Timestamp dateCreation, boolean expiree) {
         this.id = id;
         this.titre = titre;
