@@ -7,7 +7,7 @@ package com.kjj.implementations;
 
 import com.atoudeft.jdbc.dao.Dao;
 import com.kjj.entites.Membre;
-import com.kjj.entites.MembreFactory;
+import com.kjj.entites.Factory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -74,7 +74,7 @@ public class MembreDao extends Dao<Membre> {
             stm.setString(1,usr);
             ResultSet r = stm.executeQuery();
             if (r.next()) {
-                Membre m = MembreFactory.getMembre();
+                Membre m = Factory.getMembre();
                 m.setId(r.getInt("id"));  
                 m.setUsername(r.getString("username"));  
                 m.setPassword(r.getString("password"));  
@@ -131,7 +131,7 @@ public class MembreDao extends Dao<Membre> {
             stm.setString(1,strId);
             ResultSet r = stm.executeQuery();
             if (r.next()) {
-                Membre m = MembreFactory.getMembre();
+                Membre m = Factory.getMembre();
                 m.setId(r.getInt("id"));  
                 m.setUsername(r.getString("username"));
                 r.close();

@@ -27,12 +27,12 @@ public class Factory {
     }
     
    public static Annonce getAnnonce() {
-        return new Annonce ();
+        return new Annonce (new Adresse("Canada"));
     }
     
     public static Annonce getAnnonce(int id, String titre, String description,
-            String etatObjet, String adr_ville,String adr_codePostal,
-            String adr_province, Timestamp date,int idMembre, boolean expiree) {
+            String etatObjet, String adr_ville, String adr_codePostal,
+            String adr_province, Timestamp date, int idMembre, boolean expiree) {
         
         return new Annonce(id, titre, description, etatObjet,
                 new Adresse(adr_ville, adr_codePostal, adr_province, "Canada"),

@@ -24,8 +24,13 @@ public class Annonce {
     public Annonce() {
         this.adresse = new Adresse();
     }
+
+    public Annonce(Adresse adresse) {
+        this.adresse = adresse;
+    }
     
-    public Annonce(int id, String titre, String description, String etatObjet, Adresse adresse, int idMembre, Timestamp dateCreation, boolean expiree) {
+    public Annonce(int id, String titre, String description, String etatObjet,
+            Adresse adresse, int idMembre, Timestamp dateCreation, boolean expiree) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -37,7 +42,8 @@ public class Annonce {
         this.expiree = expiree;
     }
         
-    public Annonce(int id, String titre, String description, String etatObjet, Adresse adresse, String[][] champs, int idMembre, Timestamp dateCreation, boolean expiree) {
+    public Annonce(int id, String titre, String description, String etatObjet,
+            Adresse adresse, String[][] champs, int idMembre, Timestamp dateCreation, boolean expiree) {
         this.id = id;
         this.titre = titre;
         this.description = description;

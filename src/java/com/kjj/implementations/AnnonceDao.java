@@ -13,7 +13,7 @@ import com.atoudeft.jdbc.dao.Dao;
 import com.kjj.entites.Annonce;
 import com.kjj.entites.Adresse;
 import com.kjj.entites.Factory;
-import com.kjj.entites.MembreFactory;
+import com.kjj.entites.Factory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

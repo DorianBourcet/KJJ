@@ -6,7 +6,7 @@ package com.kjj.web;
 
 import com.atoudeft.jdbc.Connexion;
 import com.kjj.entites.Membre;
-import com.kjj.entites.MembreFactory;
+import com.kjj.entites.Factory;
 import com.kjj.implementations.MembreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -85,7 +85,7 @@ public class Inscription extends HttpServlet {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Membre m = MembreFactory.getMembre(
+        Membre m = Factory.getMembre(
                 (String)donneesObligatoires.get("usr"), 
                 (String)donneesObligatoires.get("pwd"),
                 (String)donneesObligatoires.get("nom"),
