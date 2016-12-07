@@ -54,6 +54,64 @@ $(function(){
             };
         });
     });
+    $("#inscrire-submit").click(function(){
+        var url = './creerCompte.do?username='+$('#inscrip-username').val()+'&password='+$('#inscrip-password').val()+'&password2='+$('#inscrip-confirmation').val()+'&email='+$('#inscrip-email').val()+'&nom='+$('#inscrip-nom').val()+'&prenom='+$('#inscrip-prenom').val()+'&adr_numero='+$('#inscrip-num').val()+'&adr_rue1='+$('#inscrip-rue').val()+'&adr_rue2='+$('#inscrip-rue2').val()+'&adr_appartement='+$('#inscrip-app').val()+'&adr_ville='+$('#inscrip-ville').val()+'&adr_codePostal='+$('#inscrip-codepostal').val()+'&adr_province='+$('#inscrip-province').val();
+        $('#inscrip-username').css("border-color","");
+        $('#inscrip-password').css("border-color","");
+        $('#inscrip-confirmation').css("border-color","");
+        $('#inscrip-nom').css("border-color","");
+        $('#inscrip-prenom').css("border-color","");
+        $('#inscrip-email').css("border-color","");
+        $.get(url,function(data,status){
+            switch(data){
+                case "0":
+                    //code user existe
+                    $('#inscrip-username').css("border-color","red");
+                    break;
+                case "1":
+                    //code user crée
+                    $('#login-username').val($('#inscrip-username').val());
+                    $('#login-password').val($('#inscrip-password').val());
+                    $("login-submit").click();
+                    break;
+                case "2":
+                    //code si password différent de confirmation
+                    $('#inscrip-confirmation').css("border-color","red");
+                    break;
+                case "4":
+                    //code si email est deja utiliser
+                    $('#inscrip-email').css("border-color","red");
+                    break;
+                case "usr":
+                    //code si user est vide
+                    $('#inscrip-username').css("border-color","red");
+                    break;
+                case "pwd":
+                    //code si password est vide
+                    $('#inscrip-password').css("border-color","red");
+                    break;
+                case "pwd2":
+                    //code si confirmation est vide
+                    $('#inscrip-confirmation').css("border-color","red");
+                    break;
+                case "nom":
+                    //code si nom est vide
+                    $('#inscrip-nom').css("border-color","red");
+                    break;
+                case "prn":
+                    //code si prenom est vide
+                    $('#inscrip-prenom').css("border-color","red");
+                    break;
+                case "ema":
+                    //code si email est vide
+                    $('#inscrip-email').css("border-color","red");
+                    break;
+                default:
+                    alert("Code d'erreur inconnue");
+                    break;
+            };
+        });
+    });
     $("#menu-logout").click(function(){
         var url = './logout.do';
         $.get(url,function(data,status){
