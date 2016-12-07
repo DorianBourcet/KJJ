@@ -4,6 +4,9 @@
  */
 package com.kjj.web;
 
+import com.atoudeft.jdbc.Connexion;
+import com.kjj.entites.Membre;
+import com.kjj.implementations.MembreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -36,7 +39,16 @@ public class DonneesCompte extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        out.println("servlet données du compte (pour requêtes Ajax)");
+        if (request.getParameter("somethingNew") != null) {
+            String username = (String)request.getSession().getAttribute("connecte");
+            Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
+            MembreDao mDao = new MembreDao(Connexion.getInstance());
+            Membre unMembre = mDao.read(username);
+            Boolean resultat = mDao.etatNotifier(unMembre.getId());
+            mDao.reinitNotifier(unMembre.getId());
+            out.println(resultat);
+            
+        }
 
             /*String  e = request.getParameter("element");
             PrintWriter out = response.getWriter();
