@@ -61,21 +61,17 @@ public class Inscription extends HttpServlet {
         donneesObligatoires.put("nom",request.getParameter("nom"));
         donneesObligatoires.put("prn",request.getParameter("prenom"));
         donneesObligatoires.put("ema",request.getParameter("email"));
-        if (request.getParameter("password").equals(request.getParameter("password2"))) {
-            request.setAttribute("message", "Les champs obligatoires doivent être complétés");
-            RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp");
-            r.forward(request, response);
-            return;
+        if (!request.getParameter("password").equals(request.getParameter("password2"))) {
+            // mots de passe différents
+            out.println("2");
         }
         Set set = donneesObligatoires.entrySet();
         Iterator itr = set.iterator();
         while(itr.hasNext()) {
             Map.Entry entry = (Map.Entry)itr.next();
             if (entry.getValue().equals("")) {
-                request.setAttribute("message", "Les champs obligatoires doivent être complétés");
-                RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp");
-                r.forward(request, response);
-                return;
+                // Valeur obligatoire non fournie
+                out.println(entry.getKey());
             }
         }
 
@@ -99,11 +95,11 @@ public class Inscription extends HttpServlet {
         if (!dao.create(m))
         {
             // Erreur lors de la création (membre existant)
-            out.print(false);
+            out.print("0");
         }
         else
             // Membre créé
-            out.print(true);
+            out.print("1");
 
         
     }
