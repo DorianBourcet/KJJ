@@ -6,6 +6,7 @@
 package com.kjj.entites;
 
 import java.sql.Timestamp;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -26,18 +27,49 @@ public class Factory {
                         adr_ville, adr_codePostal, adr_province, "Canada"));
     }
     
-   public static Annonce getAnnonce() {
+    public static Annonce getAnnonce() {
         return new Annonce (new Adresse("Canada"));
     }
     
-    public static Annonce getAnnonce(int id, String titre, String description,
+    public static Annonce getAnnonce(String typeObjet) {
+        LinkedHashMap specs = new LinkedHashMap();
+        switch (typeObjet) {
+            case "automobile":
+                specs.put("Marque",null);
+                specs.put("Modèle",null);
+                specs.put("Puissance",null);
+                specs.put("Kilométrage",null);
+                specs.put("Année",null);
+                specs.put("Carburant",null);
+                specs.put("Nombre de portes",null);
+                specs.put("Couleur",null);
+                break;
+            case "cellulaire":
+                specs.put("Marque",null);
+                specs.put("Nom commercial",null);
+                specs.put("Modèle",null);
+                specs.put("Capacité de stockage",null);
+                specs.put("Stockage externe",null);
+                specs.put("Type de réseau",null);
+                specs.put("Couleur",null);
+                specs.put("Système d'exploitation",null);
+                specs.put("Type d'écran",null);
+                specs.put("Taille d'écran",null);
+                specs.put("Type de batterie",null);
+                specs.put("Capacité de batterie",null);
+                break;
+        }
+        return new Annonce(new Adresse("Canada"), specs);
+    }
+    
+    /*public static Annonce getAnnonce(int id, String titre, String description,
             String etatObjet, String adr_ville, String adr_codePostal,
             String adr_province, Timestamp date, int idMembre, boolean expiree) {
         
         return new Annonce(id, titre, description, etatObjet,
                 new Adresse(adr_ville, adr_codePostal, adr_province, "Canada"),
                 idMembre, date,expiree );
-    }
+    }*/
         
         
         

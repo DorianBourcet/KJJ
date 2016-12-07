@@ -27,7 +27,7 @@ public class TestsDAO {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Connexion.setUrl("jdbc:mysql://localhost/kijiji2?user=root&password=root");
+        /*Connexion.setUrl("jdbc:mysql://localhost/kijiji2?user=root&password=root");
         MessageDao md = new MessageDao(Connexion.getInstance());
         Calendar calendrier = Calendar.getInstance();
         Date maintenant = calendrier.getTime();
@@ -37,7 +37,25 @@ public class TestsDAO {
         
         MessagePrive test = md.read("1");
         if(test != null)
-            System.out.println(test.toJSON());
+            System.out.println(test.toJSON());*/
+        
+        Annonce uneAnnonce = Factory.getAnnonce("automobile");
+        uneAnnonce.getSpecifications().put("Kilométrage", 120);
+        uneAnnonce.getSpecifications().put("Nombre de portes", 5);
+        System.out.println(uneAnnonce.getSpecifications().get("Nombre de portes"));
+        // Get a set of the entries
+      Set set = uneAnnonce.getSpecifications().entrySet();
+      
+      // Get an iterator
+      Iterator i = set.iterator();
+      
+      // Display elements
+      while(i.hasNext()) {
+         Map.Entry me = (Map.Entry)i.next();
+         System.out.print(me.getKey() + ": ");
+         System.out.println(me.getValue());
+      }
+
         
         /*HashMap donneesObligatoires = new HashMap();
         donneesObligatoires.put("usr",m.getUsername());
