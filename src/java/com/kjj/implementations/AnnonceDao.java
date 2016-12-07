@@ -31,12 +31,14 @@ public class AnnonceDao extends Dao<Annonce>{
     
     public boolean create(Annonce a) {
         String req = "INSERT INTO annonce (`id`, `titre`, `description`, "
-                + "`adresse_ville`, `adresse_codePostal`, `adresse_province`, "
-                + "`adresse_pays`, `etatObjet`, `date`, `idMembre`)"
+                + "`typeObjet`, `prix`,`adresse_ville`, `adresse_codePostal`, "
+                + "`adresse_province`,`adresse_pays`, `etatObjet`, `date`, `idMembre`)"
                 + "VALUES ('"
                 +a.getId()+"', '"
                 +a.getTitre()+"','"
                 +a.getDescription()+"','"
+                +a.getTypeObjet()+"','"
+                +a.getPrix()+"','"
                 +a.getAdresse().getVille()+"','"
                 +a.getAdresse().getCodePostal()+"','"
                 +a.getAdresse().getProvince()+"','"
@@ -81,7 +83,8 @@ public class AnnonceDao extends Dao<Annonce>{
                 a.setId(r.getInt("id"));  
                 a.setTitre(r.getString("titre"));  
                 a.setDescription(r.getString("description"));  
-             // a.setTypeObjet(r.getString("nom"));  
+                a.setTypeObjet(r.getString("typeObjet"));  
+                a.setTypeObjet(r.getString("prix"));  
                 a.getAdresse().setVille(r.getString("adresse_ville"));  
                 a.getAdresse().setCodePostal(r.getString("adresse_codePostal"));  
                 a.getAdresse().setProvince(r.getString("adresse_province"));  
@@ -139,7 +142,8 @@ public class AnnonceDao extends Dao<Annonce>{
                 a.setId(r.getInt("id"));  
                 a.setTitre(r.getString("titre"));  
                 a.setDescription(r.getString("description"));  
-             // a.setTypeObjet(r.getString("nom"));  
+                a.setTypeObjet(r.getString("typeObjet"));
+                a.setTypeObjet(r.getString("prix")); 
                 a.getAdresse().setVille(r.getString("adresse_ville"));  
                 a.getAdresse().setCodePostal(r.getString("adresse_codePostal"));  
                 a.getAdresse().setProvince(r.getString("adresse_province"));  
