@@ -177,4 +177,62 @@ public class MembreDao extends Dao<Membre> {
         return false;
     }
     
+    public boolean reinitNotifier(int id) {
+        Statement stm = null;
+        try {
+            String req = "UPDATE membre SET quoideneuf = '0'"
+                    + " WHERE id = '" + id + "'";
+            stm = cnx.createStatement();
+            int n = stm.executeUpdate(req);
+            if (n > 0) {
+                stm.close();
+                return true;
+            }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean etatNotifier(int id) {
+        String strId = Integer.toString(id);
+        PreparedStatement stm = null;
+        try {
+            stm = cnx.prepareStatement("SELECT quoideneuf FROM membre WHERE id = ?");
+            stm.setString(1,strId);
+            ResultSet r = stm.executeQuery();
+            if (r.next()) {
+                if (r.getInt("quoideneuf") == 1) {
+                r.close();
+                stm.close();
+                return true;
+                }
+                else {
+                    r.close();
+                    stm.close();
+                    return false;
+                }
+            }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+    
 }
