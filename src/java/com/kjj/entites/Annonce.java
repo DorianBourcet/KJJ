@@ -15,11 +15,12 @@ import java.util.LinkedHashMap;
 public class Annonce {
     
     private int id, quantite;
-    private String titre, description, etatObjet;
+    private String titre, description,typeObjet ,etatObjet;
     private Adresse adresse;
     private LinkedHashMap specifications;
     private int idMembre;
     private Timestamp dateCreation;
+    private double prix;
     private boolean expiree;
 
     public Annonce() {
@@ -34,12 +35,17 @@ public class Annonce {
         this.specifications = specifications;
     }
 
-    public Annonce(int id, int quantite, String titre, String description, String etatObjet, Adresse adresse, LinkedHashMap specifications, int idMembre, Timestamp dateCreation, boolean expiree) {
+    public Annonce(int id, int quantite, String titre, String description,
+                    String typeObjet ,String etatObjet, double prix, 
+                    Adresse adresse, LinkedHashMap specifications, int idMembre,
+                    Timestamp dateCreation, boolean expiree) {
         this.id = id;
         this.quantite = quantite;
         this.titre = titre;
         this.description = description;
+        this.typeObjet = typeObjet ;
         this.etatObjet = etatObjet;
+        this.prix = prix;
         this.adresse = adresse;
         this.specifications = specifications;
         this.idMembre = idMembre;
@@ -47,12 +53,16 @@ public class Annonce {
         this.expiree = expiree;
     }
     
-    public Annonce(int id, String titre, String description, String etatObjet,
-            Adresse adresse, int idMembre, Timestamp dateCreation, boolean expiree) {
+    public Annonce(int id, String titre, String description, String typeObjet,
+                    String etatObjet, double prix, Adresse adresse, int idMembre,
+                    Timestamp dateCreation, boolean expiree) {
         this.id = id;
+        this.quantite = 1;
         this.titre = titre;
         this.description = description;
+        this.typeObjet = typeObjet ;
         this.etatObjet = etatObjet;
+        this.prix = prix;
         this.adresse = adresse;
         //this.champs = [][]champs;
         this.idMembre = idMembre;
@@ -60,12 +70,17 @@ public class Annonce {
         this.expiree = expiree;
     }
         
-    public Annonce(int id, String titre, String description, String etatObjet,
-            Adresse adresse, LinkedHashMap specifications, int idMembre, Timestamp dateCreation, boolean expiree) {
+    public Annonce(int id, String titre, String description,String typeObjet, 
+                    String etatObjet, double prix, Adresse adresse, 
+                    LinkedHashMap specifications, int idMembre,
+                    Timestamp dateCreation, boolean expiree) {
         this.id = id;
+        this.quantite = 1;
         this.titre = titre;
         this.description = description;
+        this.typeObjet = typeObjet ;
         this.etatObjet = etatObjet;
+        this.prix = prix;
         this.adresse = adresse;
         this.specifications = specifications;
         this.idMembre = idMembre;
