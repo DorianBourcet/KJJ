@@ -168,6 +168,22 @@ public class Annonce {
         this.specifications = specifications;
     }
 
+    public String getTypeObjet() {
+        return typeObjet;
+    }
+
+    public void setTypeObjet(String typeObjet) {
+        this.typeObjet = typeObjet;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+
     
     
     
