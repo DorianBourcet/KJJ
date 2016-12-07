@@ -6,6 +6,7 @@
 package com.kjj.entites;
 
 import java.sql.Timestamp;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -16,17 +17,34 @@ public class Annonce {
     private int id, quantite;
     private String titre, description, etatObjet;
     private Adresse adresse;
-    private String[][] champs; // < À repenser, peut-être avec Map
+    private LinkedHashMap specifications;
     private int idMembre;
     private Timestamp dateCreation;
     private boolean expiree;
 
     public Annonce() {
-        this.adresse = new Adresse();
     }
 
     public Annonce(Adresse adresse) {
         this.adresse = adresse;
+    }
+
+    public Annonce(Adresse adresse, LinkedHashMap specifications) {
+        this.adresse = adresse;
+        this.specifications = specifications;
+    }
+
+    public Annonce(int id, int quantite, String titre, String description, String etatObjet, Adresse adresse, LinkedHashMap specifications, int idMembre, Timestamp dateCreation, boolean expiree) {
+        this.id = id;
+        this.quantite = quantite;
+        this.titre = titre;
+        this.description = description;
+        this.etatObjet = etatObjet;
+        this.adresse = adresse;
+        this.specifications = specifications;
+        this.idMembre = idMembre;
+        this.dateCreation = dateCreation;
+        this.expiree = expiree;
     }
     
     public Annonce(int id, String titre, String description, String etatObjet,
@@ -43,13 +61,13 @@ public class Annonce {
     }
         
     public Annonce(int id, String titre, String description, String etatObjet,
-            Adresse adresse, String[][] champs, int idMembre, Timestamp dateCreation, boolean expiree) {
+            Adresse adresse, LinkedHashMap specifications, int idMembre, Timestamp dateCreation, boolean expiree) {
         this.id = id;
         this.titre = titre;
         this.description = description;
         this.etatObjet = etatObjet;
         this.adresse = adresse;
-        this.champs = champs;
+        this.specifications = specifications;
         this.idMembre = idMembre;
         this.dateCreation = dateCreation;
         this.expiree = expiree;
@@ -103,14 +121,6 @@ public class Annonce {
         this.adresse = adresse;
     }
 
-    public String[][] getChamps() {
-        return champs;
-    }
-
-    public void setChamps(String[][] champs) {
-        this.champs = champs;
-    }
-
     public int getIdMembre() {
         return idMembre;
     }
@@ -133,6 +143,14 @@ public class Annonce {
 
     public void setExpiree(boolean expiree) {
         this.expiree = expiree;
+    }
+
+    public LinkedHashMap getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(LinkedHashMap specifications) {
+        this.specifications = specifications;
     }
 
     
