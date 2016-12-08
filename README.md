@@ -1,2 +1,2 @@
-# KJJ
-This is the beginning of our new project!
+# KJJ 2.0
+Welcome to KJJ 2.0! 
