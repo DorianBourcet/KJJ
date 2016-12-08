@@ -70,6 +70,50 @@ public class AnnonceDao extends Dao<Annonce>{
 
         return false;
     }
+    
+    public boolean createType(Annonce a) {
+        
+        // À CODER !!!
+        String req = "INSERT INTO annonce (`id`, `titre`, `description`, "
+                + "`typeObjet`, `prix`,`adresse_ville`, `adresse_codePostal`, "
+                + "`adresse_province`,`adresse_pays`, `etatObjet`, `date`, `idMembre`)"
+                + "VALUES ('"
+                +a.getId()+"', '"
+                +a.getTitre()+"','"
+                +a.getDescription()+"','"
+                +a.getTypeObjet()+"','"
+                +a.getPrix()+"','"
+                +a.getAdresse().getVille()+"','"
+                +a.getAdresse().getCodePostal()+"','"
+                +a.getAdresse().getProvince()+"','"
+                +a.getAdresse().getPays()+"','"
+                +a.getEtatObjet()+"','"
+                +a.getDateCreation()+"','"
+                +a.getIdMembre()+"')";
+
+        Statement stm = null;
+        try {
+            stm = cnx.createStatement();
+            int n = stm.executeUpdate(req);
+            if (n > 0) {
+                stm.close();
+                return true;
+            }
+        } 
+        catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return false;
+    }
 
     @Override
     public Annonce read(String id) {
