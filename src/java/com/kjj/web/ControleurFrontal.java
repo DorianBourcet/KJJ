@@ -87,7 +87,6 @@ public class ControleurFrontal extends HttpServlet {
             default:
                 r = this.getServletContext().getRequestDispatcher("/index.jsp");
                 r.forward(request, response);
-                return;
         }
     }
 

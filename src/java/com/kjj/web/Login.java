@@ -5,17 +5,14 @@
 package com.kjj.web;
 
 import com.atoudeft.jdbc.Connexion;
+import com.kjj.entites.Factory;
 import com.kjj.entites.Membre;
 import com.kjj.implementations.MembreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,13 +40,13 @@ public class Login extends HttpServlet {
         out.println(request.getSession().getAttribute("connecte")+" vous êtes connecté !");*/
         String  u = request.getParameter("username"),
                 p = request.getParameter("password");
-        if (u==null || u.trim().equalsIgnoreCase(""))
+        /*if (u==null || u.trim().equalsIgnoreCase(""))
         {
             request.setAttribute("message", "Nom d'utilisateur obligatoire");
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp");
             r.forward(request, response);
             return;
-        }
+        }*/
 
         try {
             Class.forName(this.getServletContext().getInitParameter("piloteJdbc"));
@@ -75,11 +72,12 @@ public class Login extends HttpServlet {
         else
         {
             // Connexion OK
+            Membre membreConnecte = Factory.getMembre();
+            membreConnecte.setId(m.getId());
+            membreConnecte.setUsername(m.getUsername());
+
             HttpSession session = request.getSession(true);
-            session.setAttribute("connecte", u);
-            RequestDispatcher rd = this.getServletContext()
-                    .getNamedDispatcher("changements");
-            rd.include(request, response);
+            session.setAttribute("connecte", membreConnecte);
             out.print("1");
         }
     }
