@@ -13,6 +13,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,9 +29,9 @@ public class TestsDAO {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        /*Connexion.setUrl("jdbc:mysql://localhost/kijiji2?user=root&password=root");
+        Connexion.setUrl("jdbc:mysql://localhost/kijiji2?user=root&password=root");
         MessageDao md = new MessageDao(Connexion.getInstance());
-        Calendar calendrier = Calendar.getInstance();
+        /*Calendar calendrier = Calendar.getInstance();
         Date maintenant = calendrier.getTime();
         Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
         MessagePrive mp = new MessagePrive(24,25,"Ceci est un message test hahahah",currentTimestamp);
@@ -39,7 +41,7 @@ public class TestsDAO {
         if(test != null)
             System.out.println(test.toJSON());*/
         
-        Annonce uneAnnonce = Factory.getAnnonce("automobile");
+        /*Annonce uneAnnonce = Factory.getAnnonce("automobile");
         uneAnnonce.getSpecifications().put("Kilométrage", 120);
         uneAnnonce.getSpecifications().put("Nombre de portes", 5);
         System.out.println(uneAnnonce.getSpecifications().get("Nombre de portes"));
@@ -51,12 +53,15 @@ public class TestsDAO {
       
       // Display elements
       while(i.hasNext()) {
+        
          Map.Entry me = (Map.Entry)i.next();
          System.out.print(me.getKey() + ": ");
          System.out.println(me.getValue());
-      }
-
-        
+      }*/
+        List liste = new LinkedList();
+        liste = md.findConversation(24, 25);
+        for (int i=0;i<liste.size();i++)
+            System.out.println(((MessagePrive)liste.get(i)).toJSON());
         /*HashMap donneesObligatoires = new HashMap();
         donneesObligatoires.put("usr",m.getUsername());
         donneesObligatoires.put("pwd",m.getPassword());
