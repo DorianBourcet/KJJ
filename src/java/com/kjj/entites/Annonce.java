@@ -190,7 +190,7 @@ public class Annonce {
     }
 
     public LinkedList<String> getAttributsSpecs() {
-        LinkedList<String> liste = new LinkedList<String>();
+        LinkedList<String> liste = new LinkedList<>();
         Set set = this.specifications.entrySet();
         Iterator i = set.iterator();
         while(i.hasNext()) {

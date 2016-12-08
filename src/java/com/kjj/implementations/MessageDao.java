@@ -31,22 +31,16 @@ public class MessageDao extends Dao<MessagePrive> {
                 + "`contenu`, `date`)"
                 + "VALUES ('"+m.getIdExpediteur()+"', '"+m.getIdDestinataire()+"','"
                 +m.getContenu()+"','"+m.getDate()+"')";
-        String res = "SELECT LAST_INSERT_ID()";
 
         Statement stm = null;
         try {
             stm = cnx.createStatement();
-            int n = stm.executeUpdate(req);
-            ResultSet o = stm.executeQuery(res);
+            int n = stm.executeUpdate(req,Statement.RETURN_GENERATED_KEYS);
             if (n > 0) {
-                stm.close();
-                return true;
-            }
-            if (o.next()) {
-                int hey;
-                hey = o.getInt("LAST_INSERT_ID()");
-                System.out.println("id : "+hey);
-                o.close();
+                ResultSet cle = stm.getGeneratedKeys();
+                if (cle.next()) {
+                    System.out.println("id : "+cle.getString(1));
+                }
                 stm.close();
                 return true;
             }
