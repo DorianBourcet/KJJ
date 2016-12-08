@@ -18,6 +18,16 @@ public class TestFactory {
         // TODO code application logic here
         Membre unMembre = Factory.getMembre();
         System.out.println(unMembre.toString());
+        
+        Adresse uneAdresse = new Adresse("Montréal","H1T1T1","QC","Canada");
+        System.out.println(uneAdresse.toJSONAnnonce());
+        
+        Annonce uneAnnonce = Factory.getAnnonce("automobile");
+        uneAnnonce.setAdresse(uneAdresse);
+        uneAnnonce.setTitre("haha");
+        uneAnnonce.getSpecifications().put("Kilométrage", 120);
+        uneAnnonce.getSpecifications().put("Nombre de portes", 5);
+        System.out.println(uneAnnonce.toJSON());
     }
     
 }
