@@ -19,8 +19,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class AnnonceDao extends Dao<Annonce>{
@@ -30,11 +33,10 @@ public class AnnonceDao extends Dao<Annonce>{
     }
     
     public boolean create(Annonce a) {
-        String req = "INSERT INTO annonce (`id`, `titre`, `description`, "
-                + "`typeObjet`, `prix`,`adresse_ville`, `adresse_codePostal`, "
+        String req = "INSERT INTO annonce (`titre`, `description`, "
+                + "`typeObjet`, `prix`, `adresse_ville`, `adresse_codePostal`, "
                 + "`adresse_province`,`adresse_pays`, `etatObjet`, `date`, `idMembre`)"
                 + "VALUES ('"
-                +a.getId()+"', '"
                 +a.getTitre()+"','"
                 +a.getDescription()+"','"
                 +a.getTypeObjet()+"','"
@@ -50,8 +52,18 @@ public class AnnonceDao extends Dao<Annonce>{
         Statement stm = null;
         try {
             stm = cnx.createStatement();
-            int n = stm.executeUpdate(req);
+            int n = stm.executeUpdate(req,Statement.RETURN_GENERATED_KEYS);
             if (n > 0) {
+                ResultSet cle = stm.getGeneratedKeys();
+                if (cle.next()) {
+                    if (!a.getTypeObjet().equals("")) {
+                        a.setId(cle.getInt(1));
+                        if (createType(a)) {
+                            stm.close();
+                            return true;
+                        }
+                    }
+                }
                 stm.close();
                 return true;
             }
@@ -72,24 +84,26 @@ public class AnnonceDao extends Dao<Annonce>{
     }
     
     public boolean createType(Annonce a) {
-        
-        // À CODER !!!
-        String req = "INSERT INTO annonce (`id`, `titre`, `description`, "
-                + "`typeObjet`, `prix`,`adresse_ville`, `adresse_codePostal`, "
-                + "`adresse_province`,`adresse_pays`, `etatObjet`, `date`, `idMembre`)"
-                + "VALUES ('"
-                +a.getId()+"', '"
-                +a.getTitre()+"','"
-                +a.getDescription()+"','"
-                +a.getTypeObjet()+"','"
-                +a.getPrix()+"','"
-                +a.getAdresse().getVille()+"','"
-                +a.getAdresse().getCodePostal()+"','"
-                +a.getAdresse().getProvince()+"','"
-                +a.getAdresse().getPays()+"','"
-                +a.getEtatObjet()+"','"
-                +a.getDateCreation()+"','"
-                +a.getIdMembre()+"')";
+        String type = a.getTypeObjet();
+        Set set = a.getSpecifications().entrySet();
+        Iterator itr = set.iterator();
+        String req = null;
+        switch (type) {
+            case "automobile":
+                req = "INSERT INTO type_automobile (`idAnnonce`,`marque`,"
+                        + "`modele`,`puissance`,`kilometrage`,`annee`,"
+                        + "`carburant`,`nombrePortes`,`couleur`)"
+                        + "VALUES ('"+a.getId()+"',";
+                while(itr.hasNext()) {
+                    Map.Entry me = (Map.Entry)itr.next();
+                    req += "'"+me.getValue()+"'";
+                    if (itr.hasNext())
+                        req += ", ";
+                }
+                req += ")";
+                break;
+            default:
+        }
 
         Statement stm = null;
         try {

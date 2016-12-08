@@ -6,6 +6,7 @@
 package com.kjj.entites;
 
 import com.atoudeft.jdbc.Connexion;
+import com.kjj.implementations.AnnonceDao;
 import com.kjj.implementations.MembreDao;
 import com.kjj.implementations.MessageDao;
 import java.sql.Timestamp;
@@ -30,7 +31,7 @@ public class TestsDAO {
     public static void main(String[] args) {
         // TODO code application logic here
         Connexion.setUrl("jdbc:mysql://localhost/kijiji2?user=root&password=root");
-        MessageDao md = new MessageDao(Connexion.getInstance());
+        //MessageDao md = new MessageDao(Connexion.getInstance());
         /*Calendar calendrier = Calendar.getInstance();
         Date maintenant = calendrier.getTime();
         Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
@@ -44,6 +45,24 @@ public class TestsDAO {
         Annonce uneAnnonce = Factory.getAnnonce("automobile");
         uneAnnonce.getSpecifications().put("Kilométrage", 120);
         uneAnnonce.getSpecifications().put("Nombre de portes", 5);
+        uneAnnonce.getSpecifications().put("Marque", "Mazda");
+        uneAnnonce.getSpecifications().put("Modèle", "4");
+        uneAnnonce.getSpecifications().put("Puissance", 120);
+        uneAnnonce.getSpecifications().put("Année", 2010);
+        uneAnnonce.getSpecifications().put("Carburant", "Diesel");
+        uneAnnonce.getSpecifications().put("Couleur", "bleue");
+        uneAnnonce.setAdresse(new Adresse("Montréal","H1T1T1","QC","Canada"));
+        uneAnnonce.setTitre("Mazda 4");
+        uneAnnonce.setPrix(30.25);
+        uneAnnonce.setEtatObjet("neuf");
+        Calendar calendrier = Calendar.getInstance();
+        Date maintenant = calendrier.getTime();
+        Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
+        uneAnnonce.setDateCreation(currentTimestamp);
+        uneAnnonce.setIdMembre(25);
+        AnnonceDao adao = new AnnonceDao(Connexion.getInstance());
+        if (adao.create(uneAnnonce))
+            System.out.println("annonce créée");
         System.out.println(uneAnnonce.getSpecifications().get("Nombre de portes"));
         // Get a set of the entries
       Set set = uneAnnonce.getSpecifications().entrySet();
@@ -52,12 +71,12 @@ public class TestsDAO {
       Iterator i = set.iterator();
       
       // Display elements
-      while(i.hasNext()) {
+      /*while(i.hasNext()) {
         
          Map.Entry me = (Map.Entry)i.next();
          System.out.print(me.getKey() + ": ");
          System.out.println(me.getValue());
-      }
+      }*/
         
         /*HashMap donneesObligatoires = new HashMap();
         donneesObligatoires.put("usr",m.getUsername());
