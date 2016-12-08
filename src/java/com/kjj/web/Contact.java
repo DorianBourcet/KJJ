@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -45,17 +46,17 @@ public class Contact extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("destinataire") != null) {
-            int destinataire = Integer.parseInt((String)request.getParameter("destinataire"));
-            String contenu = request.getParameter("contenu");
-            PrintWriter out = response.getWriter();
-            try {
+        try {
                 Class.forName(this.getServletContext().getInitParameter("piloteJdbc"));
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
+        Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
+        PrintWriter out = response.getWriter();
+        
+        if (request.getParameter("destinataire") != null) {
+            int destinataire = Integer.parseInt((String)request.getParameter("destinataire"));
+            String contenu = request.getParameter("contenu");
             MembreDao memDao = new MembreDao(Connexion.getInstance());
             //Membre m = dao.read(u.trim());
 
@@ -89,10 +90,25 @@ public class Contact extends HttpServlet {
             }
         }
         else if (request.getParameter("conversation") != null) {
-            return;
+            int idCorrespondant = 
+                    Integer.parseInt(request.getParameter("conversation"));
+            MembreDao memDao = new MembreDao(Connexion.getInstance());
+            Membre mbreConnecte = 
+                    memDao.read((String)request.getSession().getAttribute("connecte"));
+            MessageDao messDao = new MessageDao(Connexion.getInstance());
+            List<MessagePrive> listeMessages = messDao.findConversation(mbreConnecte.getId(), idCorrespondant);
+            String listeJson = "[";
+            ListIterator itr = listeMessages.listIterator();
+            while (itr.hasNext()) {
+                listeJson += ((MessagePrive)itr.next()).toJSON();
+                if (itr.hasNext())
+                    listeJson += ", ";
+            }
+            listeJson += "]";
+            out.print(listeJson);
         }
         else {
-            return;
+            
         }
     }
 

@@ -141,3 +141,6 @@ public class MessageDao extends Dao<MessagePrive> {
             }
     
 }
+
+
+// SELECT DISTINCT idExpediteur, idDestinataire from message where (idExpediteur=24 or idDestinataire=24) ORDER BY date desc
