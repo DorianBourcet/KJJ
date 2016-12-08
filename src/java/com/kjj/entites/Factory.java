@@ -32,6 +32,7 @@ public class Factory {
     }
     
     public static Annonce getAnnonce(String typeObjet) {
+        
         LinkedHashMap specs = new LinkedHashMap();
         switch (typeObjet) {
             case "automobile":
@@ -59,7 +60,7 @@ public class Factory {
                 specs.put("Capacité de batterie",null);
                 break;
         }
-        return new Annonce(new Adresse("Canada"), specs);
+        return new Annonce(typeObjet, new Adresse("Canada"), specs);
     }
     
     /*public static Annonce getAnnonce(int id, String titre, String description,

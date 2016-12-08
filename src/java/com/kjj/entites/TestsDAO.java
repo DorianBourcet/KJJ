@@ -41,7 +41,7 @@ public class TestsDAO {
         if(test != null)
             System.out.println(test.toJSON());*/
         
-        /*Annonce uneAnnonce = Factory.getAnnonce("automobile");
+        Annonce uneAnnonce = Factory.getAnnonce("automobile");
         uneAnnonce.getSpecifications().put("Kilométrage", 120);
         uneAnnonce.getSpecifications().put("Nombre de portes", 5);
         System.out.println(uneAnnonce.getSpecifications().get("Nombre de portes"));
@@ -57,11 +57,8 @@ public class TestsDAO {
          Map.Entry me = (Map.Entry)i.next();
          System.out.print(me.getKey() + ": ");
          System.out.println(me.getValue());
-      }*/
-        List liste = new LinkedList();
-        liste = md.findConversation(24, 25);
-        for (int i=0;i<liste.size();i++)
-            System.out.println(((MessagePrive)liste.get(i)).toJSON());
+      }
+        
         /*HashMap donneesObligatoires = new HashMap();
         donneesObligatoires.put("usr",m.getUsername());
         donneesObligatoires.put("pwd",m.getPassword());

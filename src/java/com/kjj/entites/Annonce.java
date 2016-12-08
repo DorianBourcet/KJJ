@@ -6,7 +6,11 @@
 package com.kjj.entites;
 
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -30,7 +34,8 @@ public class Annonce {
         this.adresse = adresse;
     }
 
-    public Annonce(Adresse adresse, LinkedHashMap specifications) {
+    public Annonce(String type, Adresse adresse, LinkedHashMap specifications) {
+        this.typeObjet = type;
         this.adresse = adresse;
         this.specifications = specifications;
     }
@@ -184,8 +189,49 @@ public class Annonce {
         this.prix = prix;
     }
 
+    public LinkedList<String> getAttributsSpecs() {
+        LinkedList<String> liste = new LinkedList<String>();
+        Set set = this.specifications.entrySet();
+        Iterator i = set.iterator();
+        while(i.hasNext()) {
+            Map.Entry me = (Map.Entry)i.next();
+            liste.add(""+me.getKey());
+        }
+        return liste;
+    }
     
+    public String getSpecsJSON() {
+        //String[] attributs = new String[specifications.size()];
+        //LinkedList<String> liste = this.getAttributsSpecs();
+        Set set = this.specifications.entrySet();
+        Iterator i = set.iterator();
+        String json = "{";
+        
+        while(i.hasNext()) {
+            Map.Entry me = (Map.Entry)i.next();
+            json += "\""+me.getKey()+"\":\""+me.getValue()+"\",";
+        }
+        if (json != null && json.length() > 0 && json.charAt(json.length()-1)==',') {
+            json = json.substring(0, json.length()-1);
+        }
+        json += "}";
+        return json;
+    }
     
-    
+    public String toJSON() {
+        String json = "{\"id\":\""+this.id+"\",";
+        json += "\"quantite\":\""+this.quantite+"\",";
+        json += "\"titre\":\""+this.titre+"\",";
+        json += "\"description\":\""+this.description+"\",";
+        json += "\"typeObjet\":\""+this.typeObjet+"\",";
+        json += "\"etatObjet\":\""+this.etatObjet+"\",";
+        json += "\"adresse\":"+this.adresse.toJSONAnnonce()+",";
+        json += "\"specifications\":"+this.getSpecsJSON()+",";
+        json += "\"idMembre\":\""+this.idMembre+"\",";
+        json += "\"dateCreation\":\""+this.dateCreation+"\",";
+        json += "\"prix\":\""+this.prix+"\",";
+        json += "\"expiree\":\""+this.expiree+"\"}";
+        return json;
+    }
     
 }

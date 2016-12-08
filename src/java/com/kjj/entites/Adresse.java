@@ -124,4 +124,11 @@ public class Adresse {
                 +rue2+" "+appartement+"\n"
                 +ville+" "+codePostal+" "+province+" "+pays;
     }
+    
+    public String toJSONAnnonce() {
+        String json = "{\"ville\":\""+this.ville+"\",";
+        json += "\"codePostal\":\""+this.codePostal+"\",";
+        json += "\"province\":\""+this.province+"\"}";
+        return json;
+    }
 }
