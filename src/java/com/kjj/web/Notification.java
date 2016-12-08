@@ -4,18 +4,26 @@
  */
 package com.kjj.web;
 
+import com.atoudeft.jdbc.Connexion;
+import com.kjj.implementations.MembreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletContext;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author dbourcet
  */
-public class CommentaireAnnonce extends HttpServlet {
+public class Notification extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -29,8 +37,19 @@ public class CommentaireAnnonce extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        out.println("servlet commentaire annonce");
+        String uri = request.getRequestURI();
+        String substring[] = uri.split("/");
+        String action = substring[substring.length-1].replace(".do", "");
+        switch (action) {
+            case "contacter":
+                Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
+                MembreDao memDao = new MembreDao(Connexion.getInstance());
+                int destinataire = Integer.parseInt((String)request.getParameter("destinataire"));
+                memDao.notifier(destinataire);
+                return;
+            default:
+                return;
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

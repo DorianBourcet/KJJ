@@ -40,13 +40,13 @@ public class DonneesCompte extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         if (request.getParameter("somethingNew") != null) {
-            String username = (String)request.getSession().getAttribute("connecte");
             Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
             MembreDao mDao = new MembreDao(Connexion.getInstance());
-            Membre unMembre = mDao.read(username);
+            Membre unMembre = 
+                mDao.find(((Membre)request.getSession().getAttribute("connecte")).getId());
             Boolean resultat = mDao.etatNotifier(unMembre.getId());
             mDao.reinitNotifier(unMembre.getId());
-            out.println(resultat);
+            out.print(resultat);
             
         }
 

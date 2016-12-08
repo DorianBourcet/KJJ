@@ -37,8 +37,9 @@ public class Membre {
         this.password = password;
     }
 
-    public Membre(int id, String nom, String prenom) {
+    public Membre(int id, String username, String nom, String prenom) {
         this.id = id;
+        this.username = username;
         this.nom = nom;
         this.prenom = prenom;
     }

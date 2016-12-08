@@ -12,7 +12,6 @@ import com.kjj.implementations.MessageDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,12 +20,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletContext;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -58,20 +54,17 @@ public class Contact extends HttpServlet {
             int destinataire = Integer.parseInt((String)request.getParameter("destinataire"));
             String contenu = request.getParameter("contenu");
             MembreDao memDao = new MembreDao(Connexion.getInstance());
-            //Membre m = dao.read(u.trim());
-
-            Membre membreExp = 
-                    memDao.read((String)request.getSession().getAttribute("connecte"));
-            Membre membreDes = memDao.find(destinataire);
-            if (membreDes == null || membreExp == null)
+            Membre membreDest = memDao.find(destinataire);
+            if (membreDest == null)
                 out.println(false);
             else {
                 Calendar calendrier = Calendar.getInstance();
                 Date maintenant = calendrier.getTime();
                 Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
                 
-                MessagePrive mp = new MessagePrive(membreExp.getId(),
-                        membreDes.getId(), contenu, currentTimestamp);
+                MessagePrive mp = new MessagePrive(
+                    ((Membre)request.getSession().getAttribute("connecte")).getId(),
+                    membreDest.getId(), contenu, currentTimestamp);
 
                 MessageDao messDao = new MessageDao(Connexion.getInstance());
                 if (!messDao.create(mp))
@@ -81,9 +74,9 @@ public class Contact extends HttpServlet {
                 }
                 else {
                     // Message créé
-                    request.setAttribute("idDes", membreDes.getId());
+                    request.setAttribute("idDes", membreDest.getId());
                     RequestDispatcher rd = this.getServletContext()
-                        .getNamedDispatcher("changements");
+                        .getNamedDispatcher("notification");
                     rd.include(request, response);
                     out.print(true);
                 }
@@ -92,11 +85,12 @@ public class Contact extends HttpServlet {
         else if (request.getParameter("conversation") != null) {
             int idCorrespondant = 
                     Integer.parseInt(request.getParameter("conversation"));
-            MembreDao memDao = new MembreDao(Connexion.getInstance());
-            Membre mbreConnecte = 
-                    memDao.read((String)request.getSession().getAttribute("connecte"));
             MessageDao messDao = new MessageDao(Connexion.getInstance());
-            List<MessagePrive> listeMessages = messDao.findConversation(mbreConnecte.getId(), idCorrespondant);
+            List<MessagePrive> listeMessages = 
+                messDao.findConversation(
+                    ((Membre)request.getSession().
+                        getAttribute("connecte")).getId(), 
+                    idCorrespondant);
             String listeJson = "[";
             ListIterator itr = listeMessages.listIterator();
             while (itr.hasNext()) {
