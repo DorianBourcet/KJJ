@@ -9,14 +9,18 @@ package com.kjj.entites;
  *
  * @author dbourcet
  */
+import java.sql.Timestamp;
+
 public class Alerte {
     
-    private String criteresRecherche, dateDernierResultat;
+    private String criteresRecherche;
+    private Timestamp dateDernierResultat;
+    private int idMembre;
 
     public Alerte() {
     }
 
-    public Alerte(String criteresRecherche, String dateDernierResultat) {
+    public Alerte(String criteresRecherche, Timestamp dateDernierResultat) {
         this.criteresRecherche = criteresRecherche;
         this.dateDernierResultat = dateDernierResultat;
     }
@@ -29,12 +33,20 @@ public class Alerte {
         this.criteresRecherche = criteresRecherche;
     }
 
-    public String getDateDernierResultat() {
+    public Timestamp getDateDernierResultat() {
         return dateDernierResultat;
     }
 
-    public void setDateDernierResultat(String dateDernierResultat) {
+    public void setDateDernierResultat(Timestamp dateDernierResultat) {
         this.dateDernierResultat = dateDernierResultat;
+    }
+
+    public int getIdMembre() {
+        return idMembre;
+    }
+
+    public void setIdMembre(int idMembre) {
+        this.idMembre = idMembre;
     }
     
     
