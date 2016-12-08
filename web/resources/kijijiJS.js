@@ -39,6 +39,7 @@ $(function(){
                         $("#menu-login").fadeOut(500,function(){
                             $("#menu-membre").fadeIn(500,function(){
                                 $('#dash').css("display","block");
+                                $('#dash').click();
                             });
                         });
                     });
@@ -72,7 +73,7 @@ $(function(){
                     //code user crée
                     $('#login-username').val($('#inscrip-username').val());
                     $('#login-password').val($('#inscrip-password').val());
-                    $("login-submit").click();
+                    $("#login-submit").click();
                     break;
                 case "2":
                     //code si password différent de confirmation
@@ -108,6 +109,7 @@ $(function(){
                     break;
                 default:
                     alert("Code d'erreur inconnue");
+                    alert(data);
                     break;
             };
         });
@@ -120,6 +122,7 @@ $(function(){
                     $("#menu-login").fadeIn(500,function(){
                         $("#menu-inscription").fadeIn(500,function(){
                             //$('#menu-inscription').css("display","block");
+                            $("#default").click();
                         });
                     });
                 });
