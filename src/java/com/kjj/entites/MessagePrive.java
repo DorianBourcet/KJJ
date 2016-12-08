@@ -15,6 +15,7 @@ public class MessagePrive {
     
     private int id;
     private int idExpediteur, idDestinataire;
+    private String expediteur, destinataire;
     private String contenu;
     private Timestamp date;
     private int lu;
@@ -33,6 +34,13 @@ public class MessagePrive {
     public MessagePrive(int idExpediteur, int idDestinataire, String contenu, Timestamp date) {
         this.idExpediteur = idExpediteur;
         this.idDestinataire = idDestinataire;
+        this.contenu = contenu;
+        this.date = date;
+    }
+    
+    public MessagePrive(String expediteur, String destinataire, String contenu, Timestamp date) {
+        this.expediteur = expediteur;
+        this.destinataire = destinataire;
         this.contenu = contenu;
         this.date = date;
     }
@@ -61,6 +69,22 @@ public class MessagePrive {
         this.idDestinataire = idDestinataire;
     }
 
+    public String getExpediteur() {
+        return expediteur;
+    }
+
+    public void setExpediteur(String expediteur) {
+        this.expediteur = expediteur;
+    }
+
+    public String getDestinataire() {
+        return destinataire;
+    }
+
+    public void setDestinataire(String destinataire) {
+        this.destinataire = destinataire;
+    }
+
     public String getContenu() {
         return contenu;
     }
@@ -78,8 +102,8 @@ public class MessagePrive {
     }
     
     public String toJSON() {
-        return "{\"idExpediteur\":\""+this.idExpediteur
-                +"\",\"idDestinataire\":\""+this.idDestinataire
+        return "{\"expediteur\":\""+this.expediteur
+                +"\",\"destinataire\":\""+this.destinataire
                 +"\",\"contenu\":\""+this.contenu
                 +"\",\"date\":\""+this.date
                 +"\"}";

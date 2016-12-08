@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -101,5 +102,42 @@ public class MessageDao extends Dao<MessagePrive> {
     public List<MessagePrive> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public List<MessagePrive> findConversation(int id1, int id2) {
+        List<MessagePrive> liste = new LinkedList<MessagePrive>();
+        PreparedStatement stm = null;
+            try 
+            {
+                stm = cnx.prepareStatement("SELECT m1.username expediteur, "
+                        + "m2.username destinataire, message.contenu, "
+                        + "message.date from message, membre m1, membre m2 "
+                        + "where (idExpediteur=? and idDestinataire=? and "
+                        + "m1.id=? and m2.id = ?) or (idExpediteur=? "
+                        + "and idDestinataire=? and m1.id=? and m2.id = ?) "
+                        + "ORDER BY date desc");
+                stm.setInt(1,id1);
+                stm.setInt(2,id2);
+                stm.setInt(3,id1);
+                stm.setInt(4,id2);
+                stm.setInt(5,id2);
+                stm.setInt(6,id1);
+                stm.setInt(7,id2);
+                stm.setInt(8,id1);
+                ResultSet r = stm.executeQuery();
+                while (r.next())
+                {
+                        MessagePrive mp = new MessagePrive(r.getString("expediteur"),
+                                        r.getString("destinataire"),
+                                        r.getString("contenu"),
+                                        r.getTimestamp("date"));
+                        liste.add(mp);
+                }
+                r.close();
+                stm.close();
+            }
+            catch (SQLException exp) {
+            }
+            return liste;
+            }
     
 }

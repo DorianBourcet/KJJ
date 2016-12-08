@@ -45,46 +45,54 @@ public class Contact extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Début de servlet contact");
-        int destinataire = Integer.parseInt((String)request.getParameter("destinataire"));
-        String contenu = request.getParameter("contenu");
-        PrintWriter out = response.getWriter();
-        try {
-            Class.forName(this.getServletContext().getInitParameter("piloteJdbc"));
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
-        MembreDao memDao = new MembreDao(Connexion.getInstance());
-        //Membre m = dao.read(u.trim());
-        
-        Membre membreExp = 
-                memDao.read((String)request.getSession().getAttribute("connecte"));
-        Membre membreDes = memDao.find(destinataire);
-        if (membreDes == null || membreExp == null)
-            out.println(false);
-        else {
-            Calendar calendrier = Calendar.getInstance();
-            Date maintenant = calendrier.getTime();
-            Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
-            MessagePrive mp = new MessagePrive(membreExp.getId(),
-                    membreDes.getId(), contenu, currentTimestamp);
-            
-            MessageDao messDao = new MessageDao(Connexion.getInstance());
-            if (!messDao.create(mp))
-            {
-                // Erreur lors de la création du message
-                out.print(false);
+        if (request.getParameter("destinataire") != null) {
+            int destinataire = Integer.parseInt((String)request.getParameter("destinataire"));
+            String contenu = request.getParameter("contenu");
+            PrintWriter out = response.getWriter();
+            try {
+                Class.forName(this.getServletContext().getInitParameter("piloteJdbc"));
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
+            MembreDao memDao = new MembreDao(Connexion.getInstance());
+            //Membre m = dao.read(u.trim());
+
+            Membre membreExp = 
+                    memDao.read((String)request.getSession().getAttribute("connecte"));
+            Membre membreDes = memDao.find(destinataire);
+            if (membreDes == null || membreExp == null)
+                out.println(false);
             else {
-                // Message créé
-                request.setAttribute("idDes", membreDes.getId());
-                RequestDispatcher rd = this.getServletContext()
-                    .getNamedDispatcher("changements");
-                rd.include(request, response);
-                out.print(true);
+                Calendar calendrier = Calendar.getInstance();
+                Date maintenant = calendrier.getTime();
+                Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
+                
+                MessagePrive mp = new MessagePrive(membreExp.getId(),
+                        membreDes.getId(), contenu, currentTimestamp);
+
+                MessageDao messDao = new MessageDao(Connexion.getInstance());
+                if (!messDao.create(mp))
+                {
+                    // Erreur lors de la création du message
+                    out.print(false);
+                }
+                else {
+                    // Message créé
+                    request.setAttribute("idDes", membreDes.getId());
+                    RequestDispatcher rd = this.getServletContext()
+                        .getNamedDispatcher("changements");
+                    rd.include(request, response);
+                    out.print(true);
+                }
             }
+        }
+        else if (request.getParameter("conversation") != null) {
+            return;
+        }
+        else {
+            return;
         }
     }
 

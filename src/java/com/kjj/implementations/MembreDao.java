@@ -28,13 +28,13 @@ public class MembreDao extends Dao<Membre> {
     @Override
     public boolean create(Membre m) {
         String req = "INSERT INTO membre (`username`, `password`, `nom`, "
-                + "`prenom`, `email`, `avatar`, `adresse_numero`, "
+                + "`prenom`, `email`, `adresse_numero`, "
                 + "`adresse_rue1`, `adresse_rue2`, `adresse_appartement`, "
                 + "`adresse_ville`, `adresse_codePostal`, `adresse_province`, "
                 + "`adresse_pays`)"
                 + "VALUES ('"+m.getUsername()+"', '"+m.getPassword()+"','"
                 +m.getNom()+"','"+m.getPrenom()+"','"+m.getEmail()+"','"
-                +m.getAvatar()+"','"+m.getAdresse().getNumero()+"','"
+                +m.getAdresse().getNumero()+"','"
                 +m.getAdresse().getRue1()+"','"+m.getAdresse().getRue2()+"','"
                 +m.getAdresse().getAppartement()+"','"
                 +m.getAdresse().getVille()+"','"
@@ -58,6 +58,7 @@ public class MembreDao extends Dao<Membre> {
                     stm.close();
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
+                    System.out.println(e.toString());
                     e.printStackTrace();
                 }
             }
