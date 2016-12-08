@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -54,54 +55,55 @@ public class Inscription extends HttpServlet {
             aVil = request.getParameter("adr_ville"),
             aCPl = request.getParameter("adr_codePostal"),
             aPce = request.getParameter("adr_province");
-        HashMap donneesObligatoires = new HashMap();
+        LinkedHashMap donneesObligatoires = new LinkedHashMap();
         donneesObligatoires.put("usr",request.getParameter("username"));
+        donneesObligatoires.put("ema",request.getParameter("email"));
         donneesObligatoires.put("pwd",request.getParameter("password"));
         donneesObligatoires.put("pwd2",request.getParameter("password2"));
         donneesObligatoires.put("nom",request.getParameter("nom"));
         donneesObligatoires.put("prn",request.getParameter("prenom"));
-        donneesObligatoires.put("ema",request.getParameter("email"));
-        if (!request.getParameter("password").equals(request.getParameter("password2"))) {
-            // mots de passe différents
-            out.println("2");
-        }
+        
         Set set = donneesObligatoires.entrySet();
         Iterator itr = set.iterator();
         while(itr.hasNext()) {
             Map.Entry entry = (Map.Entry)itr.next();
             if (entry.getValue().equals("")) {
                 // Valeur obligatoire non fournie
-                out.println(entry.getKey());
+                out.print(entry.getKey());
+                return;
             }
         }
-
-        try {
-            Class.forName(this.getServletContext().getInitParameter("piloteJdbc"));
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        if (!request.getParameter("password").equals(request.getParameter("password2"))) {
+            // mots de passe différents
+            out.print("2");
         }
+        else{
+            try {
+                Class.forName(this.getServletContext().getInitParameter("piloteJdbc"));
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        Membre m = Factory.getMembre(
-                (String)donneesObligatoires.get("usr"), 
-                (String)donneesObligatoires.get("pwd"),
-                (String)donneesObligatoires.get("nom"),
-                (String)donneesObligatoires.get("prn"), 
-                (String)donneesObligatoires.get("ema"), aNum, aRu1, aRu2, aApp,
-                aVil, aCPl, aPce);
+            Membre m = Factory.getMembre(
+                    (String)donneesObligatoires.get("usr"), 
+                    (String)donneesObligatoires.get("pwd"),
+                    (String)donneesObligatoires.get("nom"),
+                    (String)donneesObligatoires.get("prn"), 
+                    (String)donneesObligatoires.get("ema"), aNum, aRu1, aRu2, aApp,
+                    aVil, aCPl, aPce);
 
-        Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
-        MembreDao dao = new MembreDao(Connexion.getInstance());
+            Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
+            MembreDao dao = new MembreDao(Connexion.getInstance());
 
-        if (!dao.create(m))
-        {
-            // Erreur lors de la création (membre existant)
-            out.print("0");
+            if (!dao.create(m))
+            {
+                // Erreur lors de la création (membre existant)
+                out.print("0");
+            }
+            else
+                // Membre créé
+                out.print("1");
         }
-        else
-            // Membre créé
-            out.print("1");
-
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
