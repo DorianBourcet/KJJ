@@ -38,16 +38,18 @@ public class DonneesCompte extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        if (request.getParameter("somethingNew") != null) {
-            Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
-            MembreDao mDao = new MembreDao(Connexion.getInstance());
-            Membre unMembre = 
-                mDao.find(((Membre)request.getSession().getAttribute("connecte")).getId());
-            Boolean resultat = mDao.etatNotifier(unMembre.getId());
-            mDao.reinitNotifier(unMembre.getId());
-            out.print(resultat);
-            
+        if (request.getSession().getAttribute("connecte") != null) {
+            PrintWriter out = response.getWriter();
+            if (request.getParameter("somethingNew") != null) {
+                Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
+                MembreDao mDao = new MembreDao(Connexion.getInstance());
+                Membre unMembre = 
+                    mDao.find(((Membre)request.getSession().getAttribute("connecte")).getId());
+                Boolean resultat = mDao.etatNotifier(unMembre.getId());
+                mDao.reinitNotifier(unMembre.getId());
+                out.print(resultat);
+
+            }
         }
 
             /*String  e = request.getParameter("element");

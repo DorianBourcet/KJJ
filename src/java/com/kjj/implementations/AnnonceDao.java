@@ -102,6 +102,20 @@ public class AnnonceDao extends Dao<Annonce>{
                 }
                 req += ")";
                 break;
+            case "cellulaire":
+                req = "INSERT INTO type_cellulaire (`idAnnonce`,`marque`,"
+                        + "`nomCommercial`,`modele`,`capaciteStockage`,`stockageExterne`,`typeReseau`,"
+                        + "`couleur`,`systemeExploitation`,`resolutionEcran`,"
+                        + "`tailleEcran`,`typeBatterie`,`capaciteBatterie`)"
+                        + "VALUES ('"+a.getId()+"',";
+                while(itr.hasNext()) {
+                    Map.Entry me = (Map.Entry)itr.next();
+                    req += "'"+me.getValue()+"'";
+                    if (itr.hasNext())
+                        req += ", ";
+                }
+                req += ")";
+                break;
             default:
         }
 
@@ -137,12 +151,17 @@ public class AnnonceDao extends Dao<Annonce>{
             stm.setString(1,id);
             ResultSet r = stm.executeQuery();
             if (r.next()) {
-                Annonce a = Factory.getAnnonce();
+                Annonce a = null;
+                if (!r.getString("typeObjet").equals(""))
+                    a = Factory.getAnnonce(r.getString("typeObjet"));
+                else
+                    a = Factory.getAnnonce();
+                stm = cnx.prepareStatement("SELECT * FROM annonce WHERE id = ?");
                 a.setId(r.getInt("id"));  
                 a.setTitre(r.getString("titre"));  
                 a.setDescription(r.getString("description"));  
                 a.setTypeObjet(r.getString("typeObjet"));  
-                a.setTypeObjet(r.getString("prix"));  
+                a.setPrix(r.getDouble("prix"));  
                 a.getAdresse().setVille(r.getString("adresse_ville"));  
                 a.getAdresse().setCodePostal(r.getString("adresse_codePostal"));  
                 a.getAdresse().setProvince(r.getString("adresse_province"));  
@@ -150,11 +169,81 @@ public class AnnonceDao extends Dao<Annonce>{
                 a.setEtatObjet(r.getString("etatObjet"));
                 a.setDateCreation(r.getTimestamp("date"));
                 a.setIdMembre(r.getInt("idMembre"));
-             // a.setExpiree(r.getBoolean("etat"));
+                if (!r.getString("typeObjet").equals("")) {
+                    Annonce resultat = readType(a);
+                    return resultat;
+                    
+                }
                 r.close();
                 stm.close();
                 return a;
             }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+    
+    public Annonce readType(Annonce a) {
+        PreparedStatement stm = null;
+        ResultSet r = null;
+        LinkedList listeAttributs = null;
+        Iterator itr = null;
+        int i;
+        try {
+            switch (a.getTypeObjet()) {
+                case "automobile":
+                    stm = cnx.prepareStatement("SELECT * FROM type_automobile WHERE idAnnonce = ?");
+                    stm.setString(1,""+a.getId());
+                    r = stm.executeQuery();
+                    listeAttributs = a.getAttributsSpecs();
+                    itr = listeAttributs.iterator();
+                    i = 0;
+                    if (r.next()) {
+                        while(itr.hasNext()) {
+                            i++;
+                            a.getSpecifications().put(itr.next(), r.getRowId(i));
+                        }
+                    }
+                    r.close();
+                    stm.close();
+                    return a;
+                case "cellulaire":
+                    stm = cnx.prepareStatement("SELECT * FROM type_cellulaire WHERE idAnnonce = ?");
+                    stm.setString(1,""+a.getId());
+                    r = stm.executeQuery();
+                    listeAttributs = a.getAttributsSpecs();
+                    itr = listeAttributs.iterator();
+                    i = 1;
+                    
+                    if (r.next()) {
+                        //System.out.println(a.toJSON());
+                        a.getSpecifications().put(listeAttributs.get(0), r.getString(2));
+                        a.getSpecifications().put(listeAttributs.get(1), r.getString(3));
+                        a.getSpecifications().put(listeAttributs.get(2), r.getString(4));
+                        a.getSpecifications().put(listeAttributs.get(3), r.getInt(5));
+                        a.getSpecifications().put(listeAttributs.get(4), r.getString(6));
+                        a.getSpecifications().put(listeAttributs.get(5), r.getString(7));
+                        a.getSpecifications().put(listeAttributs.get(6), r.getString(8));
+                        a.getSpecifications().put(listeAttributs.get(7), r.getString(9));
+                        a.getSpecifications().put(listeAttributs.get(8), r.getString(10));
+                        a.getSpecifications().put(listeAttributs.get(9), r.getFloat(11));
+                        a.getSpecifications().put(listeAttributs.get(10), r.getString(12));
+                        a.getSpecifications().put(listeAttributs.get(11), r.getInt(13));
+                    }
+                    r.close();
+                    stm.close();
+                    return a;
+                default:
+            } 
         } catch (SQLException exp) {
         } finally {
             if (stm != null) {

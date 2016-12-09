@@ -42,28 +42,33 @@ public class TestsDAO {
         if(test != null)
             System.out.println(test.toJSON());*/
         
-        Annonce uneAnnonce = Factory.getAnnonce("automobile");
-        uneAnnonce.getSpecifications().put("Kilométrage", 120);
-        uneAnnonce.getSpecifications().put("Nombre de portes", 5);
-        uneAnnonce.getSpecifications().put("Marque", "Mazda");
-        uneAnnonce.getSpecifications().put("Modèle", "4");
-        uneAnnonce.getSpecifications().put("Puissance", 120);
-        uneAnnonce.getSpecifications().put("Année", 2010);
-        uneAnnonce.getSpecifications().put("Carburant", "Diesel");
-        uneAnnonce.getSpecifications().put("Couleur", "bleue");
+        /*Annonce uneAnnonce = Factory.getAnnonce("cellulaire");
+        uneAnnonce.getSpecifications().put("Marque", "Samsung");
+        uneAnnonce.getSpecifications().put("Nom commercial", "Galaxy S II");
+        uneAnnonce.getSpecifications().put("Modèle", "GT-I9100");
+        uneAnnonce.getSpecifications().put("Capacité de stockage", 16);
+        uneAnnonce.getSpecifications().put("Stockage externe", "MicroSD");
+        uneAnnonce.getSpecifications().put("Type de réseau", "HSPA+");
+        uneAnnonce.getSpecifications().put("Couleur", "Noir");
+        uneAnnonce.getSpecifications().put("Système d'exploitation", "Android 4.1");
+        uneAnnonce.getSpecifications().put("Résolution d'écran", "480*800");
+        uneAnnonce.getSpecifications().put("Taille d'écran", 4.3);
+        uneAnnonce.getSpecifications().put("Type de batterie", "Li-ion");
+        uneAnnonce.getSpecifications().put("Capacité de batterie", 2300);
         uneAnnonce.setAdresse(new Adresse("Montréal","H1T1T1","QC","Canada"));
-        uneAnnonce.setTitre("Mazda 4");
-        uneAnnonce.setPrix(30.25);
-        uneAnnonce.setEtatObjet("neuf");
+        uneAnnonce.setTitre("Téléphone Galaxy S2");
+        uneAnnonce.setDescription("Vends mon Samsung Galaxy S2, bon état général. Fonctionne encore très bien. Batterie neuve remplacée en octobre.");
+        uneAnnonce.setPrix(56);
+        uneAnnonce.setEtatObjet("occasion");
         Calendar calendrier = Calendar.getInstance();
         Date maintenant = calendrier.getTime();
         Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
         uneAnnonce.setDateCreation(currentTimestamp);
-        uneAnnonce.setIdMembre(25);
+        uneAnnonce.setIdMembre(25);*/
         AnnonceDao adao = new AnnonceDao(Connexion.getInstance());
-        if (adao.create(uneAnnonce))
-            System.out.println("annonce créée");
-        System.out.println(uneAnnonce.getSpecifications().get("Nombre de portes"));
+        Annonce uneAnnonce = adao.read("20");
+        System.out.println(uneAnnonce.toJSON());
+        //System.out.println(uneAnnonce.getSpecifications().get("Nombre de portes"));
         // Get a set of the entries
       Set set = uneAnnonce.getSpecifications().entrySet();
       
