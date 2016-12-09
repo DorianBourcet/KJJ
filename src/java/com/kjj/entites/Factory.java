@@ -54,7 +54,7 @@ public class Factory {
                 specs.put("Type de réseau",null);
                 specs.put("Couleur",null);
                 specs.put("Système d'exploitation",null);
-                specs.put("Type d'écran",null);
+                specs.put("Résolution d'écran",null);
                 specs.put("Taille d'écran",null);
                 specs.put("Type de batterie",null);
                 specs.put("Capacité de batterie",null);
