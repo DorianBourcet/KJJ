@@ -4,8 +4,13 @@
  */
 package com.kjj.web;
 
+import com.atoudeft.jdbc.Connexion;
+import com.kjj.entites.Annonce;
+import com.kjj.implementations.AnnonceDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +34,27 @@ public class ConsultationAnnonce extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+                Class.forName(this.getServletContext().getInitParameter("piloteJdbc"));
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
         PrintWriter out = response.getWriter();
-        out.println("servlet de consultation d'une annonce");
+        //out.println("servlet édition annonce (nouvelle ou existante)");
+        if (request.getParameter("idAnnonce") != null) {
+            String idAnnonce = request.getParameter("idAnnonce");
+            AnnonceDao adao = new AnnonceDao(Connexion.getInstance());
+            Annonce uneAnnonce = adao.read(idAnnonce);
+            if (uneAnnonce != null) {
+                out.println(uneAnnonce.toJSON());
+                return;
+            }
+            else {
+                out.println("");
+                return;
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
