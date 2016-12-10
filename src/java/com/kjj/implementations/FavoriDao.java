@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FavoriDao extends Dao<Favori> {
@@ -26,9 +27,8 @@ public class FavoriDao extends Dao<Favori> {
 
      @Override
     public boolean create(Favori f) {
-        String req = "INSERT INTO favoris (`id`, `idMembre`, `idAnnonce`)"
+        String req = "INSERT INTO favoris (`idMembre`, `idAnnonce`)"
                 + "VALUES ('"
-                +f.getId()+"','"
                 +f.getIdMembre()+"','"
                 +f.getIdAnnonce()+"')";
 
@@ -64,7 +64,7 @@ public class FavoriDao extends Dao<Favori> {
             ResultSet r = stm.executeQuery();
             if (r.next()) {
                 Favori f = new Favori();
-                f.setId(r.getString("id"));  
+                f.setId(r.getInt("id"));  
                 f.setIdMembre(r.getInt("idMembre"));  
                 f.setIdAnnonce(r.getInt("idAnnonce")); 
                 r.close();
@@ -86,18 +86,87 @@ public class FavoriDao extends Dao<Favori> {
     }
 
     @Override
-    public boolean update(Favori x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(Favori f) {
+     Statement stm = null;
+        try {
+            String req = "UPDATE favoris SET "
+                            +"idMembre = '"+f.getIdMembre()+"'," 
+                            +"idAnnonce = '"+f.getIdAnnonce()+"'," 
+                            +" WHERE id = '"+f.getId()+"'";
+            //System.out.println("REQUETE "+req);
+            stm = cnx.createStatement();
+            int n = stm.executeUpdate(req);
+            if (n > 0) {
+                stm.close();
+                return true;
+            }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 
     @Override
-    public boolean delete(Favori x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean delete(Favori f) {
+        Statement stm = null;
+	try 
+	{
+		stm = cnx.createStatement(); 
+		int n= stm.executeUpdate("DELETE FROM favoris WHERE id='"+f.getId()+"'");
+		if (n>0)
+		{
+			stm.close();
+			return true;
+		}
+	}
+	catch (SQLException exp)
+	{
+	}
+	finally
+	{
+		if (stm!=null)
+		try {
+			stm.close();
+		} catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}			
+	}
+	return false;
     }
 
     @Override
     public List<Favori> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Favori> liste = new LinkedList<Favori>();
+            try 
+		{
+		Statement stm = cnx.createStatement(); 
+		ResultSet r = stm.executeQuery("SELECT * FROM evaluation");
+		while (r.next())
+		{
+			
+                    Favori f = new Favori(r.getInt("id"),                                   
+                                        r.getInt("idMembre"),
+                                        r.getInt("idAnnonce"));
+				liste.add(f);
+			}
+			r.close();
+			stm.close();
+		}
+		catch (SQLException exp)
+		{
+		}
+		return liste;
     }
+    
     
 }
