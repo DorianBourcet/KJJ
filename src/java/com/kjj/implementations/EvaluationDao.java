@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 
 public class EvaluationDao extends Dao<Evaluation>{
@@ -91,19 +92,91 @@ public class EvaluationDao extends Dao<Evaluation>{
         return null;
     }
 
-    @Override
-    public boolean update(Evaluation x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  @Override
+    public boolean update(Evaluation ev) {
+     Statement stm = null;
+        try {
+            String req = "UPDATE evaluation SET "
+                    + "contenu = '"+ev.getContenu()+"',"
+                    + "note = '"+ev.getNote()+"',"
+                    +"idMembre = '"+ev.getIdMembre()+"'," 
+                    +"idAnnonce = '"+ev.getIdAnnonce()+"'," 
+                    +" WHERE id = '"+ev.getId()+"'";
+            //System.out.println("REQUETE "+req);
+            stm = cnx.createStatement();
+            int n = stm.executeUpdate(req);
+            if (n > 0) {
+                stm.close();
+                return true;
+            }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 
     @Override
-    public boolean delete(Evaluation x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean delete(Evaluation ev) {
+        Statement stm = null;
+	try 
+	{
+		stm = cnx.createStatement(); 
+		int n= stm.executeUpdate("DELETE FROM evaluation WHERE id='"+ev.getId()+"'");
+		if (n>0)
+		{
+			stm.close();
+			return true;
+		}
+	}
+	catch (SQLException exp)
+	{
+	}
+	finally
+	{
+		if (stm!=null)
+		try {
+			stm.close();
+		} catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}			
+	}
+	return false;
     }
 
     @Override
     public List<Evaluation> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Evaluation> liste = new LinkedList<Evaluation>();
+            try 
+		{
+		Statement stm = cnx.createStatement(); 
+		ResultSet r = stm.executeQuery("SELECT * FROM evaluation");
+		while (r.next())
+		{
+			
+                    Evaluation ev = new Evaluation(r.getInt("id"),
+                                        r.getString("contenu"),
+                                        r.getInt("note"),
+                                        r.getInt("idMembre"),
+                                        r.getInt("idAnnonce"));
+				liste.add(ev);
+			}
+			r.close();
+			stm.close();
+		}
+		catch (SQLException exp)
+		{
+		}
+		return liste;
     }
     
     

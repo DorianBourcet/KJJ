@@ -89,19 +89,89 @@ public class CommentaireDao extends Dao<Commentaire>{
     }
 
 
-    @Override
-    public boolean update(Commentaire x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     @Override
+    public boolean update(Commentaire c) {
+     Statement stm = null;
+        try {
+            String req = "UPDATE commentaire SET "
+                    + "contenu = '"+c.getContenu()+"',"
+                    +"idMembre = '"+c.getIdMembre()+"'," 
+                    +"date = '"+c.getDate()+"'"
+                    +" WHERE id = '"+c.getId()+"'";
+           // System.out.println("REQUETE "+req);
+            stm = cnx.createStatement();
+            int n = stm.executeUpdate(req);
+            if (n > 0) {
+                stm.close();
+                return true;
+            }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 
     @Override
-    public boolean delete(Commentaire x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean delete(Commentaire c) {
+        Statement stm = null;
+	try 
+	{
+		stm = cnx.createStatement(); 
+		int n= stm.executeUpdate("DELETE FROM commentaire WHERE id='"+c.getId()+"'");
+		if (n>0)
+		{
+			stm.close();
+			return true;
+		}
+	}
+	catch (SQLException exp)
+	{
+	}
+	finally
+	{
+		if (stm!=null)
+		try {
+			stm.close();
+		} catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}			
+	}
+	return false;
     }
 
     @Override
     public List<Commentaire> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Commentaire> liste = new LinkedList<Commentaire>();
+            try 
+		{
+		Statement stm = cnx.createStatement(); 
+		ResultSet r = stm.executeQuery("SELECT * FROM commentaire");
+		while (r.next())
+		{
+			
+                    Commentaire c = new      Commentaire(r.getInt("id"),
+                                        r.getString("contenu"),
+                                        r.getInt("idMembre"),
+                                        r.getTimestamp("date"));
+				liste.add(c);
+			}
+			r.close();
+			stm.close();
+		}
+		catch (SQLException exp)
+		{
+		}
+		return liste;
     }
     
 }
