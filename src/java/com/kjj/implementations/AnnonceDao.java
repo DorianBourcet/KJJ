@@ -333,9 +333,8 @@ public class AnnonceDao extends Dao<Annonce>{
                 +"adresse_codePostal = '"+a.getAdresse().getCodePostal()+"',"
                 +"adresse_province = '"+a.getAdresse().getProvince()+"',"
                 +"adresse_pays = '"+a.getAdresse().getPays()+"',"
-                +"etatObjet = '"+a.getEtatObjet()+"',"
+                +"etatObjet = '"+a.getEtatObjet()+"'"
                 +" WHERE id = '"+a.getId()+"'";
-            //System.out.println("REQUETE "+req);
             stm = cnx.createStatement();
             int n = stm.executeUpdate(req);
             if (n > 0) {
@@ -395,7 +394,7 @@ public class AnnonceDao extends Dao<Annonce>{
                     req += "nombrePortes = '"+me.getValue()+"',";
                     itr.hasNext();
                     me = (Map.Entry)itr.next();
-                    req += "couleur = '"+me.getValue()+"',";
+                    req += "couleur = '"+me.getValue()+"'";
                     req += " WHERE idAnnonce = '"+a.getId()+"'";
                     break;
                 case "cellulaire":
@@ -435,7 +434,7 @@ public class AnnonceDao extends Dao<Annonce>{
                     req += "typeBatterie = '"+a.getEtatObjet()+"',";
                     itr.hasNext();
                     me = (Map.Entry)itr.next();
-                    req += "capaciteBatterie = '"+me.getValue()+"',";
+                    req += "capaciteBatterie = '"+me.getValue()+"'";
                     req += " WHERE idAnnonce = '"+a.getId()+"'";
                     break;
                 default:
