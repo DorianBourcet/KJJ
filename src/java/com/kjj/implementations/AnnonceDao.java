@@ -83,7 +83,7 @@ public class AnnonceDao extends Dao<Annonce>{
         return false;
     }
     
-    public boolean createType(Annonce a) {
+    private boolean createType(Annonce a) {
         String type = a.getTypeObjet();
         Set set = a.getSpecifications().entrySet();
         Iterator itr = set.iterator();
@@ -192,7 +192,7 @@ public class AnnonceDao extends Dao<Annonce>{
         return null;
     }
     
-    public Annonce readType(Annonce a) {
+    private Annonce readType(Annonce a) {
         PreparedStatement stm = null;
         ResultSet r = null;
         LinkedList listeAttributs = null;
@@ -322,8 +322,142 @@ public class AnnonceDao extends Dao<Annonce>{
     }
 
     @Override
-    public boolean update(Annonce x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(Annonce a) {
+     Statement stm = null;
+        try {
+            String req = "UPDATE annonce SET "
+                +"titre = '"+a.getTitre()+"'," 
+                +"description = '"+a.getDescription()+"'," 
+                +"prix = '"+a.getPrix()+"',"
+                +"adresse_ville = '"+a.getAdresse().getVille()+"',"
+                +"adresse_codePostal = '"+a.getAdresse().getCodePostal()+"',"
+                +"adresse_province = '"+a.getAdresse().getProvince()+"',"
+                +"adresse_pays = '"+a.getAdresse().getPays()+"',"
+                +"etatObjet = '"+a.getEtatObjet()+"',"
+                +" WHERE id = '"+a.getId()+"'";
+            //System.out.println("REQUETE "+req);
+            stm = cnx.createStatement();
+            int n = stm.executeUpdate(req);
+            if (n > 0) {
+                if (!a.getTypeObjet().equals("")) {
+                    if (updateType(a)) {
+                        stm.close();
+                        return true;
+                    }
+                }
+                stm.close();
+                return true;
+            }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+    
+    private boolean updateType(Annonce a) {
+        Statement stm = null;
+        Set set = a.getSpecifications().entrySet();
+        Iterator itr = set.iterator();
+        Map.Entry me = null;
+        String req = null;
+        try {
+            switch (a.getTypeObjet()) {
+                case "automobile":
+                    req = "UPDATE type_automobile SET ";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "marque = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "modele = '"+me.getValue()+"'," ;
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req+= "puissance = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "kilometrage = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "annee = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req +="carburant = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "nombrePortes = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "couleur = '"+me.getValue()+"',";
+                    req += " WHERE idAnnonce = '"+a.getId()+"'";
+                    break;
+                case "cellulaire":
+                    req = "UPDATE type_cellulaire SET ";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "marque = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "nomCommercial = '"+me.getValue()+"'," ;
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req+= "modele = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "capaciteStockage = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "stockageExterne = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req +="typeReseau = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "couleur = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "systemeExploitation = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "resolutionEcran = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "tailleEcran = '"+me.getValue()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "typeBatterie = '"+a.getEtatObjet()+"',";
+                    itr.hasNext();
+                    me = (Map.Entry)itr.next();
+                    req += "capaciteBatterie = '"+me.getValue()+"',";
+                    req += " WHERE idAnnonce = '"+a.getId()+"'";
+                    break;
+                default:
+            }
+            stm = cnx.createStatement();
+            int n = stm.executeUpdate(req);
+            if (n > 0) {
+                stm.close();
+                return true;
+            }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 
     @Override
