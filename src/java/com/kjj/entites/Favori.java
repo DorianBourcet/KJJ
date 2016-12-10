@@ -11,24 +11,22 @@ package com.kjj.entites;
  */
 public class Favori {
     
-    private String id;
-    private int idMembre;
-    private int idAnnonce;
+    private int id, idMembre, idAnnonce;
 
     public Favori() {
     }
 
-    public Favori(String id, int idMembre, int idAnnonce) {
+    public Favori(int id, int idMembre, int idAnnonce) {
         this.id = id;
         this.idMembre = idMembre;
         this.idAnnonce = idAnnonce;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
