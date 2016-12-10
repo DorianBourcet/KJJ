@@ -67,7 +67,6 @@ public class AlerteDao extends Dao<Alerte>{
             ResultSet r = stm.executeQuery();
             if (r.next()) {
                 Alerte a = new Alerte();
-                a.setId(r.getInt("id"));
                 a.setCriteresRecherche(r.getString("criteresRecherche"));  
                 a.setDateDernierResultat(r.getTimestamp("dateDernierResultat"));  
                 a.setIdMembre(r.getInt("idMembre")); 
@@ -91,88 +90,18 @@ public class AlerteDao extends Dao<Alerte>{
 
 
     @Override
-    public boolean update(Alerte a) {
-     Statement stm = null;
-        try {
-            String req = "UPDATE alerte SET "
-                    + "criteresRecherche = '"+a.getCriteresRecherche()+"',"
-                    +"dateDernierResultat = '"+a.getDateDernierResultat()+"'," 
-                    +"idMembre = '"+a.getIdMembre()+"'"
-                    +" WHERE id = '"+a.getId()+"'";
-            System.out.println("REQUETE "+req);
-            stm = cnx.createStatement();
-            int n = stm.executeUpdate(req);
-            if (n > 0) {
-                stm.close();
-                return true;
-            }
-        } catch (SQLException exp) {
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-        return false;
+    public boolean update(Alerte x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean delete(Alerte a) {
-        Statement stm = null;
-	try 
-	{
-		stm = cnx.createStatement(); 
-		int n= stm.executeUpdate("DELETE FROM alerte WHERE id='"+a.getId()+"'");
-		if (n>0)
-		{
-			stm.close();
-			return true;
-		}
-	}
-	catch (SQLException exp)
-	{
-	}
-	finally
-	{
-		if (stm!=null)
-		try {
-			stm.close();
-		} catch (SQLException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}			
-	}
-	return false;
+    public boolean delete(Alerte x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Alerte> findAll() {
-        List<Alerte> liste = new LinkedList<Alerte>();
-            try 
-		{
-		Statement stm = cnx.createStatement(); 
-		ResultSet r = stm.executeQuery("SELECT * FROM alerte");
-		while (r.next())
-		{
-			
-                    Alerte p = new      Alerte(r.getInt("id"),
-                                        r.getString("criteresRecherche"),
-                                        r.getTimestamp("dateDernierResultat"),
-                                        r.getInt("idMembre"));
-				liste.add(p);
-			}
-			r.close();
-			stm.close();
-		}
-		catch (SQLException exp)
-		{
-		}
-		return liste;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

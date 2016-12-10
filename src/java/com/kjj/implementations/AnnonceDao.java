@@ -208,10 +208,14 @@ public class AnnonceDao extends Dao<Annonce>{
                     itr = listeAttributs.iterator();
                     i = 0;
                     if (r.next()) {
-                        while(itr.hasNext()) {
-                            i++;
-                            a.getSpecifications().put(itr.next(), r.getRowId(i));
-                        }
+                        a.getSpecifications().put(listeAttributs.get(0), r.getString(2));
+                        a.getSpecifications().put(listeAttributs.get(1), r.getString(3));
+                        a.getSpecifications().put(listeAttributs.get(2), r.getInt(4));
+                        a.getSpecifications().put(listeAttributs.get(3), r.getInt(5));
+                        a.getSpecifications().put(listeAttributs.get(4), r.getInt(6));
+                        a.getSpecifications().put(listeAttributs.get(5), r.getString(7));
+                        a.getSpecifications().put(listeAttributs.get(6), r.getInt(8));
+                        a.getSpecifications().put(listeAttributs.get(7), r.getString(9));
                     }
                     r.close();
                     stm.close();
