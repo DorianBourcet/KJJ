@@ -5,6 +5,7 @@
  */
 package com.kjj.listeners;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 
@@ -21,6 +22,9 @@ public class EcouteurRequete implements ServletRequestListener {
 
     @Override
     public void requestInitialized(ServletRequestEvent sre) {
+        ServletRequest requete = sre.getServletRequest();
+        String valeur = (String)requete.getParameter("username");
+        System.out.println(valeur);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         //System.out.println("parametre haha = "+sre.getServletRequest().getParameter("haha"));
     }
