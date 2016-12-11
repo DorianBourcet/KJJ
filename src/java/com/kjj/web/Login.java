@@ -75,7 +75,6 @@ public class Login extends HttpServlet {
             Membre membreConnecte = Factory.getMembre();
             membreConnecte.setId(m.getId());
             membreConnecte.setUsername(m.getUsername());
-
             HttpSession session = request.getSession(true);
             session.setAttribute("connecte", membreConnecte);
             out.print("1");

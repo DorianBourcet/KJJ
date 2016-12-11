@@ -74,10 +74,11 @@ public class Contact extends HttpServlet {
                 }
                 else {
                     // Message créé
-                    request.setAttribute("idDes", membreDest.getId());
-                    RequestDispatcher rd = this.getServletContext()
+                    request.setAttribute("miseAJour", "message");
+                    request.setAttribute("idDestinataire", membreDest.getId());
+                    /*RequestDispatcher rd = this.getServletContext()
                         .getNamedDispatcher("notification");
-                    rd.include(request, response);
+                    rd.include(request, response);*/
                     out.print(true);
                 }
             }
