@@ -5,6 +5,8 @@
  */
 package com.kjj.listeners;
 
+import com.atoudeft.jdbc.Connexion;
+import com.kjj.implementations.MembreDao;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
@@ -18,13 +20,31 @@ public class EcouteurRequete implements ServletRequestListener {
     @Override
     public void requestDestroyed(ServletRequestEvent sre) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ServletRequest requete = sre.getServletRequest();
+        String valeur = (String)requete.getParameter("username");
+        System.out.println(valeur);
+        String attr = (String)requete.getAttribute("haha");
+        System.out.println(attr);
+        String action;
+        if ((String)requete.getAttribute("miseAJour") == null)
+            action = "";
+        else
+            action = (String)requete.getAttribute("miseAJour");
+        switch (action) {
+            case "message":
+                Connexion.setUrl(sre.getServletContext().getInitParameter("urlBd"));
+                MembreDao memDao = new MembreDao(Connexion.getInstance());
+                int destinataire = (int)requete.getAttribute("idDestinataire");
+                memDao.notifier(destinataire);
+                return;
+            default:
+                return;
+        }
     }
 
     @Override
     public void requestInitialized(ServletRequestEvent sre) {
-        ServletRequest requete = sre.getServletRequest();
-        String valeur = (String)requete.getParameter("username");
-        System.out.println(valeur);
+        
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         //System.out.println("parametre haha = "+sre.getServletRequest().getParameter("haha"));
     }
