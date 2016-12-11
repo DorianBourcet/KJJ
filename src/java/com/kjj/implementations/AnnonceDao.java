@@ -458,6 +458,35 @@ public class AnnonceDao extends Dao<Annonce>{
         }
         return false;
     }
+    
+    public List<Annonce> findAllLimit(int numPage) {
+        List<Annonce> liste = new LinkedList<>();
+        PreparedStatement stm = null;
+        try 
+            {
+                stm = cnx.prepareStatement("select * from annonce "
+                        + "Order by 1 desc LIMIT ?, 16");
+                stm.setInt(1,numPage);
+                ResultSet r = stm.executeQuery();
+                //System.out.println(r);
+                while (r.next())
+                {
+                    Annonce uneAnnonce = Factory.getAnnonce();
+                    uneAnnonce.setId(r.getInt("id"));
+                    uneAnnonce.setTitre(r.getString("titre"));
+                    uneAnnonce.setDateCreation(r.getTimestamp("date"));
+                    uneAnnonce.setTypeObjet(r.getString("typeObjet"));
+                    uneAnnonce.setPrix(r.getDouble("prix"));
+                    //uneAnnonce.getAdresse().setVille(r.getString("ville"));
+                    liste.add(uneAnnonce);
+                }
+                r.close();
+                stm.close();
+            }
+            catch (SQLException exp) {
+            }
+            return liste;
+    }
 
     @Override
     public boolean delete(Annonce x) {

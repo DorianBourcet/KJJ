@@ -28,9 +28,9 @@ public class MessageDao extends Dao<MessagePrive> {
     @Override
     public boolean create(MessagePrive m) {
         String req = "INSERT INTO message (`idExpediteur`, `idDestinataire`, "
-                + "`contenu`)"
+                + "`contenu`, `date`)"
                 + "VALUES ('"+m.getIdExpediteur()+"', '"+m.getIdDestinataire()+"','"
-                +m.getContenu()+"')";
+                +m.getContenu()+"','"+m.getDate()+"')";
 
         Statement stm = null;
         try {
@@ -74,7 +74,6 @@ public class MessageDao extends Dao<MessagePrive> {
                 m.setIdDestinataire(r.getInt("idDestinataire"));  
                 m.setContenu(r.getString("contenu"));
                 m.setDate(r.getTimestamp("date"));
-                m.setLu(r.getByte("lu"));
                 r.close();
                 stm.close();
                 return m;
@@ -94,95 +93,22 @@ public class MessageDao extends Dao<MessagePrive> {
     }
 
     @Override
-    public boolean update(MessagePrive m) {
-       Statement stm = null;
-        try {
-            String req = "UPDATE message SET "
-                    + "idExpediteur = '"+m.getExpediteur()+"',"
-                    +"idDestinataire = '"+m.getDestinataire()+"'," 
-                    +"contenu = '"+m.getContenu()+"'"
-                    +"date = '"+m.getDate()+"'"
-                    +"lu = '"+m.getLu()+"'"
-                    +" WHERE id = '"+m.getId()+"'";
-            //System.out.println("REQUETE "+req);
-            stm = cnx.createStatement();
-            int n = stm.executeUpdate(req);
-            if (n > 0) {
-                stm.close();
-                return true;
-            }
-        } catch (SQLException exp) {
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-        return false;
+    public boolean update(MessagePrive x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean delete(MessagePrive m) {
-    Statement stm = null;
-	try 
-	{
-		stm = cnx.createStatement(); 
-		int n= stm.executeUpdate("DELETE FROM message WHERE id='"+m.getId()+"'");
-		if (n>0)
-		{
-			stm.close();
-			return true;
-		}
-	}
-	catch (SQLException exp)
-	{
-	}
-	finally
-	{
-		if (stm!=null)
-		try {
-			stm.close();
-		} catch (SQLException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}			
-	}
-	return false;
+    public boolean delete(MessagePrive x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<MessagePrive> findAll() {
-         List<MessagePrive> liste = new LinkedList<MessagePrive>();
-            try 
-		{
-		Statement stm = cnx.createStatement(); 
-		ResultSet r = stm.executeQuery("SELECT * FROM message");
-		while (r.next())
-		{
-			
-                    MessagePrive m = new     MessagePrive(r.getInt("id"),
-                                        r.getInt("idExpediteur"),
-                                        r.getInt("idDestinataire"),
-                                        r.getString("contenu"),
-                                        r.getTimestamp("date")
-                                        );
-				liste.add(m);
-			}
-			r.close();
-			stm.close();
-		}
-		catch (SQLException exp)
-		{
-		}
-		return liste;}
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public List<MessagePrive> findConversation(int id1, int id2) {
-        List<MessagePrive> liste = new LinkedList<MessagePrive>();
+        List<MessagePrive> liste = new LinkedList<>();
         PreparedStatement stm = null;
             try 
             {
@@ -246,6 +172,7 @@ public class MessageDao extends Dao<MessagePrive> {
         }
         return false;
     }
+    
 }
 
 
