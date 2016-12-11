@@ -11,6 +11,9 @@ import com.kjj.implementations.AnnonceDao;
 import com.kjj.implementations.MembreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -43,10 +46,10 @@ public class ConsultationAnnonce extends HttpServlet {
             }
         Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
         PrintWriter out = response.getWriter();
+        AnnonceDao adao = new AnnonceDao(Connexion.getInstance());
         //out.println("servlet édition annonce (nouvelle ou existante)");
         if (request.getParameter("idAnnonce") != null) {
             String idAnnonce = request.getParameter("idAnnonce");
-            AnnonceDao adao = new AnnonceDao(Connexion.getInstance());
             Annonce uneAnnonce = adao.read(idAnnonce);
             if (uneAnnonce != null) {
                 MembreDao mdao = new MembreDao(Connexion.getInstance());
@@ -59,6 +62,38 @@ public class ConsultationAnnonce extends HttpServlet {
                 out.println("");
                 return;
             }
+        }
+        else if (request.getParameter("page") != null) {
+            int numPage = Integer.parseInt(request.getParameter("page"));
+            int indexDebut = numPage*16-16;
+            List<Annonce> liste = new LinkedList<>();
+            liste = adao.findAllLimit(indexDebut);
+            Iterator itr = liste.iterator();
+            System.out.println(liste);
+            String listeJson = "[";
+            while (itr.hasNext()) {
+                listeJson += ((Annonce)itr.next()).toJSON();
+                if (itr.hasNext())
+                    listeJson += ",";
+            }
+            listeJson += ",{\"numPage\":\""+numPage+"\"}]";
+            out.println(listeJson);
+            return;
+        }
+        else {
+            List<Annonce> liste = new LinkedList<>();
+            liste = adao.findAllLimit(0);
+            Iterator itr = liste.iterator();
+            System.out.println(liste);
+            String listeJson = "{\"annonce\":[";
+            while (itr.hasNext()) {
+                listeJson += ((Annonce)itr.next()).toJSON();
+                if (itr.hasNext())
+                    listeJson += ",";
+            }
+            listeJson += "],\"page\":[{\"numPage\":\"1\"}]}";
+            out.println(listeJson);
+            return;
         }
     }
 

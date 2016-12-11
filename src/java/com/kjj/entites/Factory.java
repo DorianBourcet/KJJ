@@ -28,7 +28,7 @@ public class Factory {
     }
     
     public static Annonce getAnnonce() {
-        return new Annonce (new Adresse("Canada"));
+        return new Annonce (new Adresse("Canada"), new LinkedHashMap());
     }
     
     public static Annonce getAnnonce(String typeObjet) {

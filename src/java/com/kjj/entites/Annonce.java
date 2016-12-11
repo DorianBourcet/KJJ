@@ -30,8 +30,9 @@ public class Annonce {
     public Annonce() {
     }
 
-    public Annonce(Adresse adresse) {
+    public Annonce(Adresse adresse, LinkedHashMap specs) {
         this.adresse = adresse;
+        this.specifications = specs;
     }
 
     public Annonce(String type, Adresse adresse, LinkedHashMap specifications) {
