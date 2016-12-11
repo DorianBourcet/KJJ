@@ -125,6 +125,10 @@ public class Membre {
                 +prenom+" "+nom+"\n"
                 +adresse.toString();
     }
+    
+    public String toJSON() {
+        return "{\"id\":\""+this.id+"\",\"username\":\""+this.username+"\"}";
+    }
 
     
 }

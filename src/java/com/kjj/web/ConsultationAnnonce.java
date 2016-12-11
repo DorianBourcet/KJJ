@@ -6,7 +6,9 @@ package com.kjj.web;
 
 import com.atoudeft.jdbc.Connexion;
 import com.kjj.entites.Annonce;
+import com.kjj.entites.Membre;
 import com.kjj.implementations.AnnonceDao;
+import com.kjj.implementations.MembreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -47,7 +49,10 @@ public class ConsultationAnnonce extends HttpServlet {
             AnnonceDao adao = new AnnonceDao(Connexion.getInstance());
             Annonce uneAnnonce = adao.read(idAnnonce);
             if (uneAnnonce != null) {
-                out.println(uneAnnonce.toJSON());
+                MembreDao mdao = new MembreDao(Connexion.getInstance());
+                Membre unMembre = mdao.find(uneAnnonce.getIdMembre());
+                String jsonResponse = "["+uneAnnonce.toJSON()+","+unMembre.toJSON()+"}";
+                out.println(jsonResponse);
                 return;
             }
             else {
