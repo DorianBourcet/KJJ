@@ -74,7 +74,7 @@ public class Contact extends HttpServlet {
                 }
                 else {
                     // Message créé
-                    request.setAttribute("miseAJour", "message");
+                    request.setAttribute("notifierMembre", "message");
                     request.setAttribute("idDestinataire", membreDest.getId());
                     /*RequestDispatcher rd = this.getServletContext()
                         .getNamedDispatcher("notification");
@@ -92,6 +92,8 @@ public class Contact extends HttpServlet {
                     ((Membre)request.getSession().
                         getAttribute("connecte")).getId(), 
                     idCorrespondant);
+                messDao.setMessagesLus(((Membre)request.getSession().
+                        getAttribute("connecte")).getId(), idCorrespondant);
             String listeJson = "[";
             ListIterator itr = listeMessages.listIterator();
             while (itr.hasNext()) {
@@ -103,7 +105,21 @@ public class Contact extends HttpServlet {
             out.print(listeJson);
         }
         else {
-            
+            MembreDao memDao = new MembreDao(Connexion.getInstance());
+            List<Membre> listeCorrespondants = 
+                    memDao.findCorrespondants(((Membre)request.getSession().
+                        getAttribute("connecte")).getId());
+            String listeJson = "[";
+            ListIterator itr = listeCorrespondants.listIterator();
+            while (itr.hasNext()) {
+                Membre test = (Membre)itr.next();
+                //System.out.println(test.toJSON());
+                listeJson += test.toJSON();
+                if (itr.hasNext())
+                    listeJson += ", ";
+            }
+            listeJson += "]";
+            out.print(listeJson);
         }
     }
 

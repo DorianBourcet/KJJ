@@ -100,12 +100,21 @@ public class MessagePrive {
     public void setDate(Timestamp date) {
         this.date = date;
     }
+
+    public int getLu() {
+        return lu;
+    }
+
+    public void setLu(int lu) {
+        this.lu = lu;
+    }
     
     public String toJSON() {
         return "{\"expediteur\":\""+this.expediteur
                 +"\",\"destinataire\":\""+this.destinataire
                 +"\",\"contenu\":\""+this.contenu
                 +"\",\"date\":\""+this.date
+                +"\",\"lu\":\""+this.lu
                 +"\"}";
     }
 

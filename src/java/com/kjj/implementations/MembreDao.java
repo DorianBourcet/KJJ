@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -234,6 +235,34 @@ public class MembreDao extends Dao<Membre> {
             }
         }
         return false;
+    }
+    
+    public List<Membre> findCorrespondants(int idMembre) {
+        List<Membre> liste = new LinkedList<>();
+        PreparedStatement stm = null;
+        try 
+            {
+                stm = cnx.prepareStatement("select id, username from membre "
+                        + "where id in (select idExpediteur from message "
+                        + "where idDestinataire=?) or "
+                        + "id in (select idDestinataire from message "
+                        + "where idExpediteur=?)");
+                stm.setInt(1,idMembre);
+                stm.setInt(2,idMembre);
+                ResultSet r = stm.executeQuery();
+                while (r.next())
+                {
+                    Membre unCorrespondant = Factory.getMembre();
+                    unCorrespondant.setId(r.getInt("id"));
+                    unCorrespondant.setUsername(r.getString("username"));
+                    liste.add(unCorrespondant);
+                }
+                r.close();
+                stm.close();
+            }
+            catch (SQLException exp) {
+            }
+            return liste;
     }
     
 }

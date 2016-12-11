@@ -108,7 +108,7 @@ public class MessageDao extends Dao<MessagePrive> {
     }
     
     public List<MessagePrive> findConversation(int id1, int id2) {
-        List<MessagePrive> liste = new LinkedList<MessagePrive>();
+        List<MessagePrive> liste = new LinkedList<>();
         PreparedStatement stm = null;
             try 
             {
@@ -143,6 +143,35 @@ public class MessageDao extends Dao<MessagePrive> {
             }
             return liste;
             }
+    
+    public boolean setMessagesLus(int id1, int id2) {
+        Statement stm = null;
+        try {
+            String req = "UPDATE message SET "
+                +"lu = '1'" 
+                +" WHERE (idExpediteur = '"+id1+"' "
+                    + "AND idDestinataire = '"+id2+"') "
+                    + "OR (idExpediteur = '"+id2+"' "
+                    + "AND idDestinataire = '"+id1+"')";
+            stm = cnx.createStatement();
+            int n = stm.executeUpdate(req);
+            if (n > 0) {
+                stm.close();
+                return true;
+            }
+        } catch (SQLException exp) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
     
 }
 

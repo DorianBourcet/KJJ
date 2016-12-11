@@ -21,15 +21,11 @@ public class EcouteurRequete implements ServletRequestListener {
     public void requestDestroyed(ServletRequestEvent sre) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         ServletRequest requete = sre.getServletRequest();
-        String valeur = (String)requete.getParameter("username");
-        System.out.println(valeur);
-        String attr = (String)requete.getAttribute("haha");
-        System.out.println(attr);
-        String action;
-        if ((String)requete.getAttribute("miseAJour") == null)
+        String action = null;
+        if ((String)requete.getAttribute("notifierMembre") == null)
             action = "";
         else
-            action = (String)requete.getAttribute("miseAJour");
+            action = (String)requete.getAttribute("notifierMembre");
         switch (action) {
             case "message":
                 Connexion.setUrl(sre.getServletContext().getInitParameter("urlBd"));
