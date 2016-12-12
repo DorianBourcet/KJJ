@@ -54,7 +54,7 @@ public class ConsultationAnnonce extends HttpServlet {
             if (uneAnnonce != null) {
                 MembreDao mdao = new MembreDao(Connexion.getInstance());
                 Membre unMembre = mdao.find(uneAnnonce.getIdMembre());
-                String jsonResponse = "["+uneAnnonce.toJSON()+","+unMembre.toJSON()+"}";
+                String jsonResponse = "["+uneAnnonce.toJSON()+","+unMembre.toJSON()+"]";
                 out.println(jsonResponse);
                 return;
             }
