@@ -69,7 +69,7 @@ public class EditionAnnonce extends HttpServlet {
                     annonceEditee.setDescription(request.getParameter("description"));
                     annonceEditee.setTypeObjet(annonceModifiable.getTypeObjet());
                     annonceEditee.setEtatObjet(request.getParameter("etatObjet"));
-                    annonceEditee.setPrix(Integer.parseInt(request.getParameter("prix")));
+                    annonceEditee.setPrix(Double.parseDouble(request.getParameter("prix")));
                     annonceEditee.getAdresse().setVille(request.getParameter("ville"));
                     annonceEditee.getAdresse().setCodePostal(request.getParameter("codePostal"));
                     annonceEditee.getAdresse().setProvince(request.getParameter("province"));
@@ -117,17 +117,30 @@ public class EditionAnnonce extends HttpServlet {
             }
             else {
                 // Création d'annonce
-                Annonce nouvAnnonce = Factory.getAnnonce();
-                //LinkedList listeAttributs = nouvAnnonce.getAttributsSpecs();
+                Annonce nouvAnnonce;
+                String typeObjet;
+                if (request.getParameter("typeObjet")==null) {
+                    nouvAnnonce = Factory.getAnnonce();
+                    typeObjet = "";
+                }
+                else {
+                    nouvAnnonce = Factory.getAnnonce(request.getParameter("typeObjet"));
+                    typeObjet = request.getParameter("typeObjet");
+                }
+                LinkedList listeAttributs = nouvAnnonce.getAttributsSpecs();
                 nouvAnnonce.setTitre(request.getParameter("titre"));
                 nouvAnnonce.setDescription(request.getParameter("description"));
                 nouvAnnonce.setEtatObjet(request.getParameter("etatObjet"));
-                nouvAnnonce.setPrix(Double.parseDouble(request.getParameter("prix")));
+                if (request.getParameter("prix")==null)
+                    nouvAnnonce.setPrix(0);
+                else
+                    nouvAnnonce.setPrix(Double.parseDouble(request.getParameter("prix")));
                 nouvAnnonce.getAdresse().setVille(request.getParameter("ville"));
                 nouvAnnonce.getAdresse().setCodePostal(request.getParameter("codePostal"));
                 nouvAnnonce.getAdresse().setProvince(request.getParameter("province"));
                 nouvAnnonce.setIdMembre(((Membre)request.getSession().getAttribute("connecte")).getId());
-                /*switch (nouvAnnonce.getTypeObjet()) {
+                System.out.println(nouvAnnonce.toJSON());
+                switch (typeObjet) {
                     case "automobile":
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(0), request.getParameter("marque"));
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(1), request.getParameter("modele"));
@@ -153,7 +166,7 @@ public class EditionAnnonce extends HttpServlet {
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(7), request.getParameter("capaciteBatterie"));
                         break;
                     default:
-                }*/
+                }
                 if (adao.create(nouvAnnonce)) {
                         out.print("1"); // Annonce créée avec succès
                         return;

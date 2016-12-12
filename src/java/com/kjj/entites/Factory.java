@@ -59,6 +59,7 @@ public class Factory {
                 specs.put("Type de batterie",null);
                 specs.put("Capacité de batterie",null);
                 break;
+            default:
         }
         return new Annonce(typeObjet, new Adresse("Canada"), specs);
     }
