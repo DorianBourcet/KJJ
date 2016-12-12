@@ -32,10 +32,11 @@ public class AnnonceDao extends Dao<Annonce>{
         super(c);
     }
     
+    @Override
     public boolean create(Annonce a) {
         String req = "INSERT INTO annonce (`titre`, `description`, "
                 + "`typeObjet`, `prix`, `adresse_ville`, `adresse_codePostal`, "
-                + "`adresse_province`,`adresse_pays`, `etatObjet`, `date`, `idMembre`)"
+                + "`adresse_province`,`adresse_pays`, `etatObjet`, `idMembre`)"
                 + "VALUES ('"
                 +a.getTitre()+"','"
                 +a.getDescription()+"','"
@@ -46,7 +47,6 @@ public class AnnonceDao extends Dao<Annonce>{
                 +a.getAdresse().getProvince()+"','"
                 +a.getAdresse().getPays()+"','"
                 +a.getEtatObjet()+"','"
-                +a.getDateCreation()+"','"
                 +a.getIdMembre()+"')";
 
         Statement stm = null;
