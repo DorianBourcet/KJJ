@@ -15,15 +15,16 @@ public class Commentaire {
     
     private int id;
     private String contenu;
-    private int idMembre;
+    private int idAnnonce,idMembre;
     private Timestamp date;
 
     public Commentaire() {
     }
 
-    public Commentaire(int id, String contenu, int idMembre, Timestamp date) {
+    public Commentaire(int id, String contenu, int idAnnonce,int idMembre, Timestamp date) {
         this.id = id;
         this.contenu = contenu;
+        this.idAnnonce = idAnnonce;
         this.idMembre = idMembre;
         this.date = date;
     }
@@ -58,6 +59,14 @@ public class Commentaire {
 
     public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    public int getIdAnnonce() {
+        return idAnnonce;
+    }
+
+    public void setIdAnnonce(int idAnnonce) {
+        this.idAnnonce = idAnnonce;
     }
 
     
