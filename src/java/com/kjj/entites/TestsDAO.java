@@ -68,12 +68,13 @@ public class TestsDAO {
         AnnonceDao adao = new AnnonceDao(Connexion.getInstance());
         Annonce uneAnnonce = adao.read("20");
         uneAnnonce.setTitre("GalaxyS2");
-        uneAnnonce.getSpecifications().put("Marque", "Samsung");
+        uneAnnonce.setTypeObjet("");
+        //uneAnnonce.getSpecifications().put("Marque", "Samsung");
         //System.out.println(uneAnnonce.toJSON());
-        if (adao.update(uneAnnonce))
-            System.out.println("updated");
+        if (adao.create(uneAnnonce))
+            System.out.println("created");
         else
-            System.out.println("not updated");
+            System.out.println("not created");
         //System.out.println(uneAnnonce.getSpecifications().get("Nombre de portes"));
         // Get a set of the entries
       Set set = uneAnnonce.getSpecifications().entrySet();

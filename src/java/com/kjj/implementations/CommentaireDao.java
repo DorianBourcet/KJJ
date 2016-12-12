@@ -7,10 +7,8 @@ package com.kjj.implementations;
 
 /**
  *
- * @author ali
- */
-
-import java.sql.Timestamp;
+ * @author usager
+ */import java.sql.Timestamp;
 import com.atoudeft.jdbc.dao.Dao;
 import com.kjj.entites.Commentaire;
 import java.sql.Connection;
@@ -28,11 +26,13 @@ public class CommentaireDao extends Dao<Commentaire>{
 
      @Override
     public boolean create(Commentaire c) {
-        String req = "INSERT INTO commentaire (`contenu`,`idAnnonce`, `idMembre`)"
+        String req = "INSERT INTO commentaire (`id`, `contenu`, `idMembre`, "
+                + "`date`)"
                 + "VALUES ('"
+                +c.getId()+"','"
                 +c.getContenu()+"','"
-                +c.getIdAnnonce()+"','"
-                +c.getIdMembre()+"')";
+                +c.getIdMembre()+"','"
+                +c.getDate()+"')";
 
         Statement stm = null;
         try {
@@ -68,7 +68,6 @@ public class CommentaireDao extends Dao<Commentaire>{
                 Commentaire c = new Commentaire();
                 c.setId(r.getInt("id"));  
                 c.setContenu(r.getString("contenu"));  
-                c.setIdAnnonce(r.getInt("idAnnonce"));
                 c.setIdMembre(r.getInt("idMembre")); 
                 c.setDate(r.getTimestamp("date")); 
                 r.close();
@@ -96,7 +95,6 @@ public class CommentaireDao extends Dao<Commentaire>{
         try {
             String req = "UPDATE commentaire SET "
                     + "contenu = '"+c.getContenu()+"',"
-                    +"idAnnonce = '"+c.getIdMembre()+"'," 
                     +"idMembre = '"+c.getIdMembre()+"'," 
                     +"date = '"+c.getDate()+"'"
                     +" WHERE id = '"+c.getId()+"'";
@@ -163,7 +161,6 @@ public class CommentaireDao extends Dao<Commentaire>{
 			
                     Commentaire c = new      Commentaire(r.getInt("id"),
                                         r.getString("contenu"),
-                                        r.getInt("idAnnonce"),
                                         r.getInt("idMembre"),
                                         r.getTimestamp("date"));
 				liste.add(c);
@@ -177,30 +174,4 @@ public class CommentaireDao extends Dao<Commentaire>{
 		return liste;
     }
     
-
-    public List<Commentaire> findAllByAnnonce(int idAnnonce) {
-        List<Commentaire> liste = new LinkedList<Commentaire>();
-            try 
-		{
-		Statement stm = cnx.createStatement(); 
-		ResultSet r = stm.executeQuery("SELECT * FROM commentaire "
-                        + "where idAnnonce = "+idAnnonce+" Order by date Desc");
-		while (r.next())
-		{
-			
-                    Commentaire c = new      Commentaire(r.getInt("id"),
-                                        r.getString("contenu"),
-                                        r.getInt("idAnnonce"),
-                                        r.getInt("idMembre"),
-                                        r.getTimestamp("date"));
-				liste.add(c);
-			}
-			r.close();
-			stm.close();
-		}
-		catch (SQLException exp)
-		{
-		}
-		return liste;
-    }
 }

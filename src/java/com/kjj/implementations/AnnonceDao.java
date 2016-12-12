@@ -33,18 +33,20 @@ public class AnnonceDao extends Dao<Annonce>{
     }
     
     public boolean create(Annonce a) {
-        String req = "INSERT INTO annonce (`titre`, `description`,"
-                + "`prix`, `adresse_ville`, `adresse_codePostal`, "
-                + "`adresse_province`,`adresse_pays`, `etatObjet`, `idMembre`)"
+        String req = "INSERT INTO annonce (`titre`, `description`, "
+                + "`typeObjet`, `prix`, `adresse_ville`, `adresse_codePostal`, "
+                + "`adresse_province`,`adresse_pays`, `etatObjet`, `date`, `idMembre`)"
                 + "VALUES ('"
                 +a.getTitre()+"','"
                 +a.getDescription()+"','"
+                +a.getTypeObjet()+"','"
                 +a.getPrix()+"','"
                 +a.getAdresse().getVille()+"','"
                 +a.getAdresse().getCodePostal()+"','"
                 +a.getAdresse().getProvince()+"','"
                 +a.getAdresse().getPays()+"','"
                 +a.getEtatObjet()+"','"
+                +a.getDateCreation()+"','"
                 +a.getIdMembre()+"')";
 
         Statement stm = null;
@@ -54,7 +56,7 @@ public class AnnonceDao extends Dao<Annonce>{
             if (n > 0) {
                 ResultSet cle = stm.getGeneratedKeys();
                 if (cle.next()) {
-                    if (!a.getTypeObjet().equals("")) {
+                    if (!(a.getTypeObjet() == null)) {
                         a.setId(cle.getInt(1));
                         if (createType(a)) {
                             stm.close();
@@ -463,7 +465,7 @@ public class AnnonceDao extends Dao<Annonce>{
         try 
             {
                 stm = cnx.prepareStatement("select * from annonce "
-                        + "Order by 1 desc LIMIT ?, 15");
+                        + "Order by 1 desc LIMIT ?, 16");
                 stm.setInt(1,numPage);
                 ResultSet r = stm.executeQuery();
                 //System.out.println(r);
