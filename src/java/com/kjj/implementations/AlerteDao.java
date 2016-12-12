@@ -7,7 +7,7 @@ package com.kjj.implementations;
 
 /**
  *
- * @author usager
+ * @author ali
  */
 import java.sql.Timestamp;
 import com.atoudeft.jdbc.dao.Dao;
