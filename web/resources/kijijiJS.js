@@ -6,8 +6,31 @@
 
 
 $(function(){
+   var page = 1;
    $("#dash").click(function(){
+       var url = 'consulter.do?page='+page;
+       $.getJSON(url,function(data){
+           $('#colonne-cartes').empty();
+           $.each(data,function(i,item){
+               var prix = parseFloat(Math.round(item.prix * 100) / 100).toFixed(2);
+               $('#colonne-cartes').append('<div class="card col-xs-12 col-sm-3 col-md-5 "><span class="pointer a-card" id="'+item.id+'"><div class="card-block"><h4 class="card-title">'+item.titre+'</h4><p class="card-text">'+item.description+'</p><h3 class="card-title">'+prix+'$</h3></div></span></div>');
+           });
+       });
        fadeView("#Exploration");
+   });
+   $('#colonne-cartes').on("click",".a-card",function(){
+       var url = 'consulter.do?idAnnonce='+$(this).attr("id");
+       $.getJSON(url).done(function(data){
+           $.each(data,function(i,item){
+               if(item.prix !== undefined){
+                   var prix = parseFloat(Math.round(item.prix * 100) / 100).toFixed(2);
+                   $('#art-titre').html(item.titre);
+                   $('#art-description').html(item.description);
+                   $('#art-prix').html(prix+" $");
+               }
+           });
+           fadeView("#Article");
+       });
    });
    $("#menu-login").click(function(){
        fadeView("#login");
