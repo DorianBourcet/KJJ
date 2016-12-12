@@ -9,7 +9,7 @@
     </div>
     <span class="col-md-7 text-md-right text-xs-center">
         <h2 id="art-titre">{titre article}</h2>
-        <p id="art-description">{description de l'article}</p>
+        <p id="art-description" class="text-justify">{description de l'article}</p>
         <h5 id="art-prix">{prix article}</h5>
         <div id="art-ajouter">
             <input type="button" id="art-button-ajouter" value="Ajouter" class="btn btn-outline-danger">

@@ -6,6 +6,6 @@
 
 <div id="Exploration" class="container">
     <div class="card-columns" id="colonne-cartes">
-        
-    </div>
+
+    </div>   
 </div>

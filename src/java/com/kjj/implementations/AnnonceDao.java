@@ -33,20 +33,18 @@ public class AnnonceDao extends Dao<Annonce>{
     }
     
     public boolean create(Annonce a) {
-        String req = "INSERT INTO annonce (`titre`, `description`, "
-                + "`typeObjet`, `prix`, `adresse_ville`, `adresse_codePostal`, "
-                + "`adresse_province`,`adresse_pays`, `etatObjet`, `date`, `idMembre`)"
+        String req = "INSERT INTO annonce (`titre`, `description`,"
+                + "`prix`, `adresse_ville`, `adresse_codePostal`, "
+                + "`adresse_province`,`adresse_pays`, `etatObjet`, `idMembre`)"
                 + "VALUES ('"
                 +a.getTitre()+"','"
                 +a.getDescription()+"','"
-                +a.getTypeObjet()+"','"
                 +a.getPrix()+"','"
                 +a.getAdresse().getVille()+"','"
                 +a.getAdresse().getCodePostal()+"','"
                 +a.getAdresse().getProvince()+"','"
                 +a.getAdresse().getPays()+"','"
                 +a.getEtatObjet()+"','"
-                +a.getDateCreation()+"','"
                 +a.getIdMembre()+"')";
 
         Statement stm = null;
@@ -465,7 +463,7 @@ public class AnnonceDao extends Dao<Annonce>{
         try 
             {
                 stm = cnx.prepareStatement("select * from annonce "
-                        + "Order by 1 desc LIMIT ?, 16");
+                        + "Order by 1 desc LIMIT ?, 15");
                 stm.setInt(1,numPage);
                 ResultSet r = stm.executeQuery();
                 //System.out.println(r);

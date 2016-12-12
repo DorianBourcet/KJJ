@@ -23,9 +23,12 @@
         <li class="nav-item dropdown" id="menu-membre">
             <span id="name-membre" class="nav-link dropdown-toggle pointer" id="responsiveNavbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{Membre Name}</span>
             <div class="dropdown-menu" aria-labelledby="responsiveNavbarDropdown">
-                <span class="dropdown-item pointer" >Settings</span>
+                <span id="menu-creation" class="dropdown-item pointer" >Crée annonce</span>
                 <span id="menu-logout" class="dropdown-item pointer" >Logout</span>
             </div>
+        </li>
+        <li class="nav-item" id="menu-settings" >
+            <span class="nav-link pointer" >Settings</span>
         </li>
     </ul>
   </div>

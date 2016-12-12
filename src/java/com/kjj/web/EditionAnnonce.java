@@ -7,6 +7,7 @@ package com.kjj.web;
 import com.atoudeft.jdbc.Connexion;
 import com.kjj.entites.Annonce;
 import com.kjj.entites.Factory;
+import com.kjj.entites.Membre;
 import com.kjj.implementations.AnnonceDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -116,16 +117,17 @@ public class EditionAnnonce extends HttpServlet {
             }
             else {
                 // Création d'annonce
-                Annonce nouvAnnonce = Factory.getAnnonce(request.getParameter("typeObjet"));
-                LinkedList listeAttributs = nouvAnnonce.getAttributsSpecs();
+                Annonce nouvAnnonce = Factory.getAnnonce();
+                //LinkedList listeAttributs = nouvAnnonce.getAttributsSpecs();
                 nouvAnnonce.setTitre(request.getParameter("titre"));
                 nouvAnnonce.setDescription(request.getParameter("description"));
                 nouvAnnonce.setEtatObjet(request.getParameter("etatObjet"));
-                nouvAnnonce.setPrix(Integer.parseInt(request.getParameter("prix")));
+                nouvAnnonce.setPrix(Double.parseDouble(request.getParameter("prix")));
                 nouvAnnonce.getAdresse().setVille(request.getParameter("ville"));
                 nouvAnnonce.getAdresse().setCodePostal(request.getParameter("codePostal"));
                 nouvAnnonce.getAdresse().setProvince(request.getParameter("province"));
-                switch (nouvAnnonce.getTypeObjet()) {
+                nouvAnnonce.setIdMembre(((Membre)request.getSession().getAttribute("connecte")).getId());
+                /*switch (nouvAnnonce.getTypeObjet()) {
                     case "automobile":
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(0), request.getParameter("marque"));
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(1), request.getParameter("modele"));
@@ -151,8 +153,8 @@ public class EditionAnnonce extends HttpServlet {
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(7), request.getParameter("capaciteBatterie"));
                         break;
                     default:
-                }
-                if (adao.update(nouvAnnonce)) {
+                }*/
+                if (adao.create(nouvAnnonce)) {
                         out.print("1"); // Annonce créée avec succès
                         return;
                     }
