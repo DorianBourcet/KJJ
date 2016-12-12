@@ -7,8 +7,9 @@ package com.kjj.implementations;
 
 /**
  *
- * @author usager
+ * @author Ali
  */
+
 import com.atoudeft.jdbc.dao.Dao;
 import com.kjj.entites.Evaluation;
 import java.sql.Connection;

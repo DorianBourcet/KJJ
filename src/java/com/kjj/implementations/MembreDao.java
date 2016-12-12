@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package com.kjj.implementations;
+/**
+ *
+ * @author Ali
+ */
+
 
 import com.atoudeft.jdbc.dao.Dao;
 import com.kjj.entites.Membre;
@@ -16,10 +21,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- *
- * @author soixa
- */
+
 public class MembreDao extends Dao<Membre> {
     
     public MembreDao(Connection c) {
