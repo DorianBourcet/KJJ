@@ -12,11 +12,35 @@ $(function(){
        $.getJSON(url,function(data){
            $('#colonne-cartes').empty();
            $.each(data,function(i,item){
-               var prix = parseFloat(Math.round(item.prix * 100) / 100).toFixed(2);
-               $('#colonne-cartes').append('<div class="card col-xs-12 col-sm-3 col-md-5 "><span class="pointer a-card" id="'+item.id+'"><div class="card-block"><h4 class="card-title">'+item.titre+'</h4><p class="card-text">'+item.description+'</p><h3 class="card-title">'+prix+'$</h3></div></span></div>');
+               if (item.prix !== undefined){
+                    var prix = parseFloat(Math.round(item.prix * 100) / 100).toFixed(2);
+                    $('#colonne-cartes').append('<div class="card"><span class="pointer a-card" id="'+item.id+'"><div class="card-block"><h4 class="card-title">'+item.titre+'</h4><p class="text-justify card-text">'+item.description+'</p><h3 class="card-title">'+prix+'$</h3></div></span></div>');
+                };
            });
        });
        fadeView("#Exploration");
+   });
+   $("#ann-submit").click(function(){
+       var form = $("#form-cree-annonce").serialize();
+       var url = 'editer.do?'+form;
+       alert(url);
+       $("#ann-titre").css("border-color","");
+       $.get(url,function(data,status){
+           alert(data);
+           switch(data){
+               
+                case "1":
+                    //code si annonce est crée
+                    $("#Titre-message").html("Confirmation");
+                    $("#Message-feedback").html("Votre projet a été crée avec success");
+                    fadeView("message-feedback");
+                    break;
+                case "3":
+                    //code si titre vide
+                    $("#ann-titre").css("border-color","red");
+                    break;
+           }
+       });
    });
    $('#colonne-cartes').on("click",".a-card",function(){
        var url = 'consulter.do?idAnnonce='+$(this).attr("id");
@@ -41,6 +65,10 @@ $(function(){
    $("#default").click(function(){
        fadeView("#Accueil");
    });
+   $("#menu-creation").click(function(){
+       fadeView("#creation-annonce");
+   });
+   
    
    $("#login-submit").click(function(){
         var url = './login.do?username='+$('#login-username').val()+'&password='+$('#login-password').val();
@@ -60,9 +88,11 @@ $(function(){
                     $("#name-membre").append($('#login-username').val());
                     $("#menu-inscription").fadeOut(500,function(){
                         $("#menu-login").fadeOut(500,function(){
-                            $("#menu-membre").fadeIn(500,function(){
-                                $('#dash').css("display","block");
-                                $('#dash').click();
+                            $("#menu-settings").fadeIn(500,function(){
+                                $("#menu-membre").fadeIn(500,function(){
+                                    $('#dash').css("display","block");
+                                    $('#dash').click();
+                                });
                             });
                         });
                     });
@@ -142,12 +172,14 @@ $(function(){
         $.get(url,function(data,status){
             $("#dash").fadeOut(500,function(){
                 $("#menu-membre").fadeOut(500,function(){
-                    $("#menu-login").fadeIn(500,function(){
-                        $("#menu-inscription").fadeIn(500,function(){
-                            //$('#menu-inscription').css("display","block");
-                            $("#default").click();
+                    $("#menu-settings").fadeOut(500,function(){
+                        $("#menu-login").fadeIn(500,function(){
+                            $("#menu-inscription").fadeIn(500,function(){
+                                //$('#menu-inscription').css("display","block");
+                                $("#default").click();
+                            });
                         });
-                    });
+                    });    
                 });
             });      
         });
@@ -161,6 +193,7 @@ function fadeView(f){
     if($("#login").css("Display")==="block") $("#login").fadeOut(300,function(){$(f).fadeIn(300);});
     if($("#Article").css("Display")==="block") $("#Article").fadeOut(300,function(){$(f).fadeIn(300);});
     if($("#Exploration").css("Display")==="block") $("#Exploration").fadeOut(300,function(){$(f).fadeIn(300);});
+    if($("#creation-annonce").css("Display")==="block") $("#creation-annonce").fadeOut(300,function(){$(f).fadeIn(300);});
 }
 
 

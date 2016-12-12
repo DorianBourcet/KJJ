@@ -19,11 +19,12 @@
             <jsp:include page="login.jsp"/>
             <jsp:include page="exploration.jsp"/>
             <jsp:include page="article.jsp"/>
+            <jsp:include page="creationAnnonce.jsp"/>
         </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <%  if (session.getAttribute("connecte") != null ){%>
-            <style>#menu-inscription,#menu-login{display: none}#dash{display: block;}#menu-membre{display: block}</style>
+            <style>#menu-inscription,#menu-login{display: none}#dash{display: block;}#menu-membre,#menu-settings{display: block}</style>
             <input type="hidden" id="hidden-name" value="<%out.print(((Membre)session.getAttribute("connecte")).getUsername());%>">
             <script>$("#name-membre").html($("#hidden-name").val());</script>
         <%}%>

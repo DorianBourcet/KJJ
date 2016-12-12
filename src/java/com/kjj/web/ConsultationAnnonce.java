@@ -65,7 +65,7 @@ public class ConsultationAnnonce extends HttpServlet {
         }
         else if (request.getParameter("page") != null) {
             int numPage = Integer.parseInt(request.getParameter("page"));
-            int indexDebut = numPage*16-16;
+            int indexDebut = numPage*15-15;
             List<Annonce> liste = new LinkedList<>();
             liste = adao.findAllLimit(indexDebut);
             Iterator itr = liste.iterator();
