@@ -474,6 +474,7 @@ public class AnnonceDao extends Dao<Annonce>{
                     Annonce uneAnnonce = Factory.getAnnonce();
                     uneAnnonce.setId(r.getInt("id"));
                     uneAnnonce.setTitre(r.getString("titre"));
+                    uneAnnonce.setDescription(r.getString("description"));
                     uneAnnonce.setDateCreation(r.getTimestamp("date"));
                     uneAnnonce.setTypeObjet(r.getString("typeObjet"));
                     uneAnnonce.setPrix(r.getDouble("prix"));
