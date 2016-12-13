@@ -20,13 +20,20 @@
             <jsp:include page="exploration.jsp"/>
             <jsp:include page="article.jsp"/>
             <jsp:include page="creationAnnonce.jsp"/>
+            <jsp:include page="messageFeedback.jsp"/>
+            <jsp:include page="viewProfil.jsp"/>
+            <jsp:include page="messagerie.jsp"/>
         </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <%  if (session.getAttribute("connecte") != null ){%>
             <style>#menu-inscription,#menu-login{display: none}#dash{display: block;}#menu-membre,#menu-settings{display: block}</style>
             <input type="hidden" id="hidden-name" value="<%out.print(((Membre)session.getAttribute("connecte")).getUsername());%>">
-            <script>$("#name-membre").html($("#hidden-name").val());</script>
+            <input type="hidden" id="hidden-id" value="<%out.print(((Membre)session.getAttribute("connecte")).getId());%>">
+            <script>
+                $("#name-membre").html($("#hidden-name").val());
+                $('.menu-profil').attr('id',$("#hidden-id").val());
+            </script>
         <%}%>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
     <script src="resources/kijijiJS.js"></script>
