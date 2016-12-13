@@ -69,7 +69,7 @@ public class EditionAnnonce extends HttpServlet {
                     annonceEditee.setDescription(request.getParameter("description"));
                     annonceEditee.setTypeObjet(annonceModifiable.getTypeObjet());
                     annonceEditee.setEtatObjet(request.getParameter("etatObjet"));
-                    annonceEditee.setPrix(Integer.parseInt(request.getParameter("prix")));
+                    annonceEditee.setPrix(Double.parseDouble(request.getParameter("prix")));
                     annonceEditee.getAdresse().setVille(request.getParameter("ville"));
                     annonceEditee.getAdresse().setCodePostal(request.getParameter("codePostal"));
                     annonceEditee.getAdresse().setProvince(request.getParameter("province"));
@@ -117,43 +117,79 @@ public class EditionAnnonce extends HttpServlet {
             }
             else {
                 // Création d'annonce
-                Annonce nouvAnnonce = Factory.getAnnonce();
-                //LinkedList listeAttributs = nouvAnnonce.getAttributsSpecs();
+                Annonce nouvAnnonce;
+                String typeObjet;
+                if (request.getParameter("typeObjet")==null) {
+                    nouvAnnonce = Factory.getAnnonce();
+                    typeObjet = "";
+                }
+                else {
+                    nouvAnnonce = Factory.getAnnonce(request.getParameter("typeObjet"));
+                    typeObjet = request.getParameter("typeObjet");
+                }
+                LinkedList listeAttributs = nouvAnnonce.getAttributsSpecs();
                 nouvAnnonce.setTitre(request.getParameter("titre"));
                 nouvAnnonce.setDescription(request.getParameter("description"));
                 nouvAnnonce.setEtatObjet(request.getParameter("etatObjet"));
-                nouvAnnonce.setPrix(Double.parseDouble(request.getParameter("prix")));
+                if (request.getParameter("prix")==null)
+                    nouvAnnonce.setPrix(0);
+                else
+                    nouvAnnonce.setPrix(Double.parseDouble(request.getParameter("prix")));
                 nouvAnnonce.getAdresse().setVille(request.getParameter("ville"));
                 nouvAnnonce.getAdresse().setCodePostal(request.getParameter("codePostal"));
                 nouvAnnonce.getAdresse().setProvince(request.getParameter("province"));
                 nouvAnnonce.setIdMembre(((Membre)request.getSession().getAttribute("connecte")).getId());
-                /*switch (nouvAnnonce.getTypeObjet()) {
+                System.out.println(nouvAnnonce.toJSON());
+                switch (typeObjet) {
                     case "automobile":
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(0), request.getParameter("marque"));
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(1), request.getParameter("modele"));
-                        nouvAnnonce.getSpecifications().put(listeAttributs.get(2), request.getParameter("puissance"));
-                        nouvAnnonce.getSpecifications().put(listeAttributs.get(3), request.getParameter("kilometrage"));
-                        nouvAnnonce.getSpecifications().put(listeAttributs.get(4), request.getParameter("annee"));
+                        if (request.getParameter("puissance") != null)
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(2), request.getParameter("puissance"));
+                        else
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(2), -1);
+                        if (request.getParameter("kilometrage") != null)
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(3), request.getParameter("kilometrage"));
+                        else
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(3), -1);
+                        if (request.getParameter("annee") != null)
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(4), request.getParameter("annee"));
+                        else
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(4), -1);
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(5), request.getParameter("carburant"));
-                        nouvAnnonce.getSpecifications().put(listeAttributs.get(6), request.getParameter("nombrePortes"));
+                        if (request.getParameter("nombrePortes") != null)
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(6), request.getParameter("nombrePortes"));
+                        else
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(6), -1);
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(7), request.getParameter("couleur"));
                         break;
                     case "cellulaire":
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(0), request.getParameter("marque"));
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(1), request.getParameter("nomCommercial"));
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(2), request.getParameter("modele"));
-                        nouvAnnonce.getSpecifications().put(listeAttributs.get(3), request.getParameter("capaciteStockage"));
+                        if (request.getParameter("capaciteStockage") != null)
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(3), request.getParameter("capaciteStockage"));
+                        else
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(3), -1);
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(4), request.getParameter("stockageExterne"));
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(5), request.getParameter("typeReseau"));
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(6), request.getParameter("couleur"));
                         nouvAnnonce.getSpecifications().put(listeAttributs.get(7), request.getParameter("systemeExploitation"));
-                        nouvAnnonce.getSpecifications().put(listeAttributs.get(7), request.getParameter("resolutionEcran"));
-                        nouvAnnonce.getSpecifications().put(listeAttributs.get(7), request.getParameter("tailleEcran"));
-                        nouvAnnonce.getSpecifications().put(listeAttributs.get(7), request.getParameter("typeBatterie"));
-                        nouvAnnonce.getSpecifications().put(listeAttributs.get(7), request.getParameter("capaciteBatterie"));
+                        nouvAnnonce.getSpecifications().put(listeAttributs.get(8), request.getParameter("resolutionEcran"));
+                        if (request.getParameter("tailleEcran") != null) {
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(9), request.getParameter("tailleEcran"));
+                        }
+                        else
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(9), -1);
+                        nouvAnnonce.getSpecifications().put(listeAttributs.get(10), request.getParameter("typeBatterie"));
+                        if (request.getParameter("capaciteBatterie") != null) {
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(11), request.getParameter("capaciteBatterie"));
+                        }
+                        else
+                            nouvAnnonce.getSpecifications().put(listeAttributs.get(11), -1);
                         break;
                     default:
-                }*/
+                }
                 if (adao.create(nouvAnnonce)) {
                         out.print("1"); // Annonce créée avec succès
                         return;
