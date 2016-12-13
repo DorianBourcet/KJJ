@@ -98,9 +98,11 @@ public class Contact extends HttpServlet {
             ListIterator itr = listeMessages.listIterator();
             while (itr.hasNext()) {
                 listeJson += ((MessagePrive)itr.next()).toJSON();
-                if (itr.hasNext())
-                    listeJson += ", ";
+                listeJson += ", ";
             }
+            MembreDao memdao = new MembreDao(Connexion.getInstance());
+            Membre unMembre = memdao.find(idCorrespondant);
+            listeJson += "{\"idMembre\":\""+unMembre.getId()+"\"}";
             listeJson += "]";
             out.print(listeJson);
         }

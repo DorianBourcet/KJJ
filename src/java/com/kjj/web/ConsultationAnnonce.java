@@ -47,7 +47,6 @@ public class ConsultationAnnonce extends HttpServlet {
         Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
         PrintWriter out = response.getWriter();
         AnnonceDao adao = new AnnonceDao(Connexion.getInstance());
-        //out.println("servlet édition annonce (nouvelle ou existante)");
         if (request.getParameter("idAnnonce") != null) {
             String idAnnonce = request.getParameter("idAnnonce");
             Annonce uneAnnonce = adao.read(idAnnonce);
@@ -65,15 +64,20 @@ public class ConsultationAnnonce extends HttpServlet {
         }
         else {
             int numPage;
+            int idMembre = 0;
             if (request.getParameter("page") != null)
                 numPage = Integer.parseInt(request.getParameter("page"));
             else
                 numPage = 1;
             int indexDebut = numPage*16-16;
             List<Annonce> liste = new LinkedList<>();
-            liste = adao.findAllLimit(indexDebut);
+            if (request.getParameter("idMembre") != null) {
+                idMembre = Integer.parseInt(request.getParameter("idMembre"));
+                liste = adao.findByMembreLimit(indexDebut,idMembre);
+            }
+            else
+                liste = adao.findAllLimit(indexDebut);
             Iterator itr = liste.iterator();
-            System.out.println(liste);
             String listeJson = "[";
             while (itr.hasNext()) {
                 listeJson += ((Annonce)itr.next()).toJSON();

@@ -42,8 +42,8 @@ public class TestsDAO {
         if(test != null)
             System.out.println(test.toJSON());*/
         
-        /*Annonce uneAnnonce = Factory.getAnnonce("cellulaire");
-        uneAnnonce.getSpecifications().put("Marque", "Samsung");
+        Annonce uneAnnonce = Factory.getAnnonce();
+        /*uneAnnonce.getSpecifications().put("Marque", "Sony");
         uneAnnonce.getSpecifications().put("Nom commercial", "Galaxy S II");
         uneAnnonce.getSpecifications().put("Modèle", "GT-I9100");
         uneAnnonce.getSpecifications().put("Capacité de stockage", 16);
@@ -54,21 +54,21 @@ public class TestsDAO {
         uneAnnonce.getSpecifications().put("Résolution d'écran", "480*800");
         uneAnnonce.getSpecifications().put("Taille d'écran", 4.3);
         uneAnnonce.getSpecifications().put("Type de batterie", "Li-ion");
-        uneAnnonce.getSpecifications().put("Capacité de batterie", 2300);
+        uneAnnonce.getSpecifications().put("Capacité de batterie", 2300);*/
         uneAnnonce.setAdresse(new Adresse("Montréal","H1T1T1","QC","Canada"));
-        uneAnnonce.setTitre("Téléphone Galaxy S2");
-        uneAnnonce.setDescription("Vends mon Samsung Galaxy S2, bon état général. Fonctionne encore très bien. Batterie neuve remplacée en octobre.");
-        uneAnnonce.setPrix(56);
+        uneAnnonce.setTitre("Horloge murale");
+        uneAnnonce.setDescription("Horloge murale à affichage numérique");
+        uneAnnonce.setPrix(100);
         uneAnnonce.setEtatObjet("occasion");
         Calendar calendrier = Calendar.getInstance();
         Date maintenant = calendrier.getTime();
         Timestamp currentTimestamp = new Timestamp(maintenant.getTime());
         uneAnnonce.setDateCreation(currentTimestamp);
-        uneAnnonce.setIdMembre(25);*/
+        uneAnnonce.setIdMembre(25);
         AnnonceDao adao = new AnnonceDao(Connexion.getInstance());
-        Annonce uneAnnonce = adao.read("20");
+        /*Annonce uneAnnonce = adao.read("20");
         uneAnnonce.setTitre("GalaxyS2");
-        uneAnnonce.setTypeObjet("");
+        uneAnnonce.setTypeObjet("");*/
         //uneAnnonce.getSpecifications().put("Marque", "Samsung");
         //System.out.println(uneAnnonce.toJSON());
         if (adao.create(uneAnnonce))
