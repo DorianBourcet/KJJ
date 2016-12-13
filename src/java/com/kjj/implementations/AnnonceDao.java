@@ -14,6 +14,7 @@ import com.kjj.entites.Annonce;
 import com.kjj.entites.Adresse;
 import com.kjj.entites.Factory;
 import com.kjj.entites.Factory;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,7 +60,6 @@ public class AnnonceDao extends Dao<Annonce>{
                     if (!(a.getTypeObjet() == null)) {
                         a.setId(cle.getInt(1));
                         if (createType(a)) {
-                            System.out.println("dans create");
                             stm.close();
                             return true;
                         }
@@ -122,7 +122,6 @@ public class AnnonceDao extends Dao<Annonce>{
         Statement stm = null;
         try {
             stm = cnx.createStatement();
-            System.out.println(req);
             int n = stm.executeUpdate(req);
             if (n > 0) {
                 stm.close();
@@ -230,7 +229,6 @@ public class AnnonceDao extends Dao<Annonce>{
                     i = 1;
                     
                     if (r.next()) {
-                        //System.out.println(a.toJSON());
                         a.getSpecifications().put(listeAttributs.get(0), r.getString(2));
                         a.getSpecifications().put(listeAttributs.get(1), r.getString(3));
                         a.getSpecifications().put(listeAttributs.get(2), r.getString(4));
@@ -469,13 +467,50 @@ public class AnnonceDao extends Dao<Annonce>{
                         + "Order by 1 desc LIMIT ?, 16");
                 stm.setInt(1,numPage);
                 ResultSet r = stm.executeQuery();
-                //System.out.println(r);
                 while (r.next())
                 {
                     Annonce uneAnnonce = Factory.getAnnonce();
                     uneAnnonce.setId(r.getInt("id"));
-                    uneAnnonce.setTitre(r.getString("titre"));
-                    uneAnnonce.setDescription(r.getString("description"));
+                    try {
+                        uneAnnonce.setTitre(new String (r.getString("titre").getBytes("UTF-8"), "ISO-8859-1"));
+                        uneAnnonce.setDescription(new String(r.getString("description").getBytes("UTF-8"), "ISO-8859-1"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    uneAnnonce.setDateCreation(r.getTimestamp("date"));
+                    uneAnnonce.setTypeObjet(r.getString("typeObjet"));
+                    uneAnnonce.setPrix(r.getDouble("prix"));
+                    //uneAnnonce.getAdresse().setVille(r.getString("ville"));
+                    liste.add(uneAnnonce);
+                }
+                r.close();
+                stm.close();
+            }
+            catch (SQLException exp) {
+            }
+            return liste;
+    }
+    
+    public List<Annonce> findByMembreLimit(int numPage, int idMembre) {
+        List<Annonce> liste = new LinkedList<>();
+        PreparedStatement stm = null;
+        try 
+            {
+                stm = cnx.prepareStatement("select * from annonce WHERE idMembre = ? "
+                        + "Order by 1 desc LIMIT ?, 16");
+                stm.setInt(2,numPage);
+                stm.setInt(1,idMembre);
+                ResultSet r = stm.executeQuery();
+                while (r.next())
+                {
+                    Annonce uneAnnonce = Factory.getAnnonce();
+                    uneAnnonce.setId(r.getInt("id"));
+                    try {
+                        uneAnnonce.setTitre(new String (r.getString("titre").getBytes("UTF-8"), "ISO-8859-1"));
+                        uneAnnonce.setDescription(new String(r.getString("description").getBytes("UTF-8"), "ISO-8859-1"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                     uneAnnonce.setDateCreation(r.getTimestamp("date"));
                     uneAnnonce.setTypeObjet(r.getString("typeObjet"));
                     uneAnnonce.setPrix(r.getDouble("prix"));
