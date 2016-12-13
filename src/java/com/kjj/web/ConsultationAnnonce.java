@@ -63,9 +63,13 @@ public class ConsultationAnnonce extends HttpServlet {
                 return;
             }
         }
-        else if (request.getParameter("page") != null) {
-            int numPage = Integer.parseInt(request.getParameter("page"));
-            int indexDebut = numPage*15-15;
+        else {
+            int numPage;
+            if (request.getParameter("page") != null)
+                numPage = Integer.parseInt(request.getParameter("page"));
+            else
+                numPage = 1;
+            int indexDebut = numPage*16-16;
             List<Annonce> liste = new LinkedList<>();
             liste = adao.findAllLimit(indexDebut);
             Iterator itr = liste.iterator();
@@ -77,21 +81,6 @@ public class ConsultationAnnonce extends HttpServlet {
                     listeJson += ",";
             }
             listeJson += ",{\"numPage\":\""+numPage+"\"}]";
-            out.println(listeJson);
-            return;
-        }
-        else {
-            List<Annonce> liste = new LinkedList<>();
-            liste = adao.findAllLimit(0);
-            Iterator itr = liste.iterator();
-            System.out.println(liste);
-            String listeJson = "{\"annonce\":[";
-            while (itr.hasNext()) {
-                listeJson += ((Annonce)itr.next()).toJSON();
-                if (itr.hasNext())
-                    listeJson += ",";
-            }
-            listeJson += "],\"page\":[{\"numPage\":\"1\"}]}";
             out.println(listeJson);
             return;
         }
