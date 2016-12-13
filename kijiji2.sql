@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 13 Décembre 2016 à 02:33
+-- Généré le :  Mar 13 Décembre 2016 à 03:25
 -- Version du serveur :  5.7.11
 -- Version de PHP :  5.6.18
 
@@ -102,6 +102,7 @@ INSERT INTO `annonce` (`id`, `titre`, `description`, `typeObjet`, `prix`, `adres
 CREATE TABLE `commentaire` (
   `id` int(11) NOT NULL,
   `contenu` text NOT NULL,
+  `idAnnonce` int(11) NOT NULL,
   `idMembre` int(11) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -222,7 +223,8 @@ INSERT INTO `message` (`id`, `idExpediteur`, `idDestinataire`, `contenu`, `date`
 (33, 26, 28, 'Salut', '2016-12-08 15:36:39', 0),
 (34, 28, 24, 'Wesh alors', '2016-12-11 07:04:29', 0),
 (38, 24, 26, 'Wesh alors', '2016-12-11 19:03:19', 1),
-(39, 28, 25, 'null', '2016-12-13 02:15:06', 1);
+(39, 28, 25, 'null', '2016-12-13 02:15:06', 1),
+(40, 28, 26, 'Salut JC', '2016-12-13 02:59:55', 0);
 
 -- --------------------------------------------------------
 
@@ -431,7 +433,7 @@ ALTER TABLE `membre`
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT pour la table `notification`
 --
