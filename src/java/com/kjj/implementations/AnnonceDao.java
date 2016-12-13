@@ -169,8 +169,10 @@ public class AnnonceDao extends Dao<Annonce>{
                 a.setEtatObjet(r.getString("etatObjet"));
                 a.setDateCreation(r.getTimestamp("date"));
                 a.setIdMembre(r.getInt("idMembre"));
-                if (!r.getString("typeObjet").equals("")) {
+                if (!r.getString("typeObjet").equals("null")) {
                     Annonce resultat = readType(a);
+                    r.close();
+                    stm.close();
                     return resultat;
                     
                 }
