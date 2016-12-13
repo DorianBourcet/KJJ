@@ -50,7 +50,7 @@
     </servlet>
     <servlet>
         <servlet-name>profilCompte</servlet-name>
-        <servlet-class>com.kjj.web.ProfilCompte</servlet-class>
+        <servlet-class>com.kjj.web.ProfilMembre</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>contact</servlet-name>
