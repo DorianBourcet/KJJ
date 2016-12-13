@@ -51,10 +51,10 @@ public class Contact extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         if (request.getParameter("destinataire") != null) {
-            int destinataire = Integer.parseInt((String)request.getParameter("destinataire"));
+            String destinataire = (String)request.getParameter("destinataire");
             String contenu = request.getParameter("contenu");
             MembreDao memDao = new MembreDao(Connexion.getInstance());
-            Membre membreDest = memDao.find(destinataire);
+            Membre membreDest = memDao.read(destinataire);
             if (membreDest == null)
                 out.println(false);
             else {
