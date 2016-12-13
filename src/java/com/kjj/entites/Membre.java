@@ -127,7 +127,12 @@ public class Membre {
     }
     
     public String toJSON() {
-        return "{\"id\":\""+this.id+"\",\"username\":\""+this.username+"\"}";
+        return "{\"id\":\""+this.id+"\",\"username\":\""+this.username+"\","
+                + "\"nom\":\""+this.nom+"\",\"prenom\":\""+this.prenom+"\","
+                + "\"adr_numero\":\""+this.adresse.getNumero()+"\",\"adr_rue1\":\""+this.adresse.getRue1()+"\","
+                + "\"adr_rue2\":\""+this.adresse.getRue2()+"\",\"adr_ville\":\""+this.adresse.getVille()+"\","
+                + "\"adr_codePostal\":\""+this.adresse.getCodePostal()+"\",\"adr_province\":\""+this.adresse.getProvince()+"\",\"adr_pays\":\""+this.adresse.getPays()+"\","
+                + "\"email\":\""+this.email+"\"}";
     }
 
     

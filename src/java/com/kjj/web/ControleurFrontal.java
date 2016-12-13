@@ -45,7 +45,7 @@ public class ControleurFrontal extends HttpServlet {
                     r = this.getServletContext().getNamedDispatcher("commentaireAnnonce");
                     r.forward(request, response);
                     return;
-                case "modifierProfil":
+                case "voirProfil":
                     r = this.getServletContext().getNamedDispatcher("profilCompte");
                     r.forward(request, response);
                     return;
