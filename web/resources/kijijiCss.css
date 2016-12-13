@@ -17,7 +17,7 @@ and open the template in the editor.
     border-bottom-color: #c3c3c3;
     border-radius: 0px;
 }
-.Titre-accueil,#Titre-message{
+.Titre-accueil,#Titre-message,#Titre-profil{
     margin-top: 150px;
     font-size: 56px;
 }
@@ -54,7 +54,7 @@ and open the template in the editor.
 #main{
     min-height: 50vh;
 }
-#inscription,#login,#Exploration,#Article,#menu-membre,#dash,#creation-annonce,#menu-settings,#message-feedback{
+#inscription,#login,#Exploration,#Article,#menu-membre,#dash,#creation-annonce,#menu-settings,#message-feedback,#viewProfil,#messagerie,#convo{
     display: none;
 }
 #form-inscrip,#form-login,#form-cree-annonce{
@@ -62,7 +62,7 @@ and open the template in the editor.
     padding-left: 50px;
     padding-right: 50px;
 }
-.a-card:hover{
+.a-card:hover,.a-convo:hover{
     text-decoration: none;
     color: #f4645f;
 }
@@ -107,5 +107,19 @@ and open the template in the editor.
 .pointer{
     cursor: pointer;
 }
- 
+#list-convo{
+    border-right: solid 1px #c3c3c3;
+    border-left: solid 1px #c3c3c3;
+}
+#list-convo span{
+    padding: 20px;
+}
+.message-names{
+    font-weight: bold;
+    font-size: 1rem;
+}
+#button-send-message{
+    margin-top: 20px;
+}
 
+ 

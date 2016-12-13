@@ -33,7 +33,7 @@ $(function(){
                     //code si annonce est crée
                     $("#Titre-message").html("Confirmation");
                     $("#Message-feedback").html("Votre projet a été crée avec success");
-                    fadeView("message-feedback");
+                    fadeView("#message-feedback");
                     break;
                 case "3":
                     //code si titre vide
@@ -92,6 +92,10 @@ $(function(){
                                 $("#menu-membre").fadeIn(500,function(){
                                     $('#dash').css("display","block");
                                     $('#dash').click();
+                                    var url = './datas?monId';
+                                    $.get(url,function(data,status){
+                                        $('.menu-profil').attr('id',data);
+                                    });
                                 });
                             });
                         });
@@ -108,6 +112,54 @@ $(function(){
             };
         });
     });
+    
+    $('.menu-profil').click(function(){
+        viewProfil($(this).attr('id'));
+    });
+    $('#menu-message').click(function(){
+        var url = "./contacter.do";
+        $.getJSON(url,function(data){
+            $('#list-convo').empty();
+            $.each(data,function(i,item){
+                $("#list-convo").append('<div><span id="'+item.id+'" class = "aConvo pointer nom-destinataire"><h5>'+item.username+'</h5></span></div>');
+            });
+        });
+        fadeView("#messagerie");
+    });
+    
+    $('#list-convo').on("click",".aConvo",function(){   
+            var url = 'contacter.do?conversation='+$(this).attr('id');
+            $.getJSON(url).done(function(data){
+                $('#convo').empty();
+                $.each(data,function(i,item){
+                if(item.idMembre === undefined){
+                    if(item.expediteur === $.trim($("#name-membre").html())){
+                       $('#convo').append('<div><span class="message-names">'+item.expediteur+' </span><span>'+item.contenu+'</span><p>'+item.date+'</p></div>');
+                       $('.destinataire').attr('id',item.destinataire);
+                    }
+                    else{
+                       $('#convo').append('<div class="text-xs-right"><span>'+item.contenu+'</span><span class="message-names"> '+item.expediteur+'</span><p>'+item.date+'</p></div>');
+                       $('.destinataire').attr('id',item.expediteur);
+                    }
+                }
+           });
+           $('#convo').append('<textarea class="form-control" id="reply" row="5"></textarea><input type="button" class="btn btn-outline-danger btn-block" value="envoyer" id="button-send-message">');
+           if ($('#convo').css('display') === "none") $('#convo').fadeIn(300);
+        }); 
+    });
+    
+    $("#convo").on("click","#button-send-message",function(){
+        var url = './contacter.do?destinataire='+$('.destinataire').attr('id')+'&contenu='+$("#reply").val();
+        $.get(url,function(data){ 
+            if (data === "true"){ 
+                var d = new Date($.now());
+                $('#convo').prepend('<div><span class="message-names">'+$("#name-membre").html()+' </span><span>'+$("#reply").val()+'</span><p>'+d+'</p></div>');
+                $("#reply").empty();
+            }
+        });
+    });
+    
+    
     $("#inscrire-submit").click(function(){
         var url = './creerCompte.do?username='+$('#inscrip-username').val()+'&password='+$('#inscrip-password').val()+'&password2='+$('#inscrip-confirmation').val()+'&email='+$('#inscrip-email').val()+'&nom='+$('#inscrip-nom').val()+'&prenom='+$('#inscrip-prenom').val()+'&adr_numero='+$('#inscrip-num').val()+'&adr_rue1='+$('#inscrip-rue').val()+'&adr_rue2='+$('#inscrip-rue2').val()+'&adr_appartement='+$('#inscrip-app').val()+'&adr_ville='+$('#inscrip-ville').val()+'&adr_codePostal='+$('#inscrip-codepostal').val()+'&adr_province='+$('#inscrip-province').val();
         $('#inscrip-username').css("border-color","");
@@ -194,6 +246,16 @@ function fadeView(f){
     if($("#Article").css("Display")==="block") $("#Article").fadeOut(300,function(){$(f).fadeIn(300);});
     if($("#Exploration").css("Display")==="block") $("#Exploration").fadeOut(300,function(){$(f).fadeIn(300);});
     if($("#creation-annonce").css("Display")==="block") $("#creation-annonce").fadeOut(300,function(){$(f).fadeIn(300);});
+    if($("#message-feedback").css("Display")==="block") $("#message-feedback").fadeOut(300,function(){$(f).fadeIn(300);});
+    if($("#viewProfil").css("Display")==="block") $("#viewProfil").fadeOut(300,function(){$(f).fadeIn(300);});
+    if($("#messagerie").css("Display")==="block") $("#messagerie").fadeOut(300,function(){$(f).fadeIn(300);});
 }
 
-
+function viewProfil(id){
+    var url = 'voirProfil.do?idMembre='+id;
+    $.getJSON(url,function(data){
+        $('#Titre-profil').html(data.username);
+        $('#profil-pays').html(data.adr_pays);
+        fadeView('#viewProfil');
+    });
+}
