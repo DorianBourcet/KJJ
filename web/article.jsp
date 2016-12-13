@@ -13,6 +13,7 @@
         <h5 id="art-prix">{prix article}</h5>
         <div id="art-ajouter">
             <input type="button" id="art-button-ajouter" value="Ajouter" class="btn btn-outline-danger">
+            <input type="button" id="art-button-contacter" class="btn btn-outline-danger" value="Contacter">
         </div>
     </span>
 </div>

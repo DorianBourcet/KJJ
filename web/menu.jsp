@@ -24,6 +24,8 @@
             <span id="name-membre" class="nav-link dropdown-toggle pointer" id="responsiveNavbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{Membre Name}</span>
             <div class="dropdown-menu" aria-labelledby="responsiveNavbarDropdown">
                 <span id="menu-creation" class="dropdown-item pointer" >Crée annonce</span>
+                <span id="" class="menu-profil dropdown-item pointer" >Profil</span>
+                <span id="menu-message" class="dropdown-item pointer" >Message</span>
                 <span id="menu-logout" class="dropdown-item pointer" >Logout</span>
             </div>
         </li>
