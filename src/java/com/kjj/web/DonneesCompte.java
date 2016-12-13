@@ -50,6 +50,10 @@ public class DonneesCompte extends HttpServlet {
                 out.print(resultat);
 
             }
+            else if (request.getParameter("monId") != null) {
+                out.print(((Membre)request.getSession().getAttribute("connecte")).getId());
+
+            }
         }
 
             /*String  e = request.getParameter("element");
