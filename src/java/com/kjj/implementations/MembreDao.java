@@ -13,6 +13,7 @@ package com.kjj.implementations;
 import com.atoudeft.jdbc.dao.Dao;
 import com.kjj.entites.Membre;
 import com.kjj.entites.Factory;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,20 +81,24 @@ public class MembreDao extends Dao<Membre> {
             if (r.next()) {
                 Membre m = Factory.getMembre();
                 m.setId(r.getInt("id"));  
-                m.setUsername(r.getString("username"));  
-                m.setPassword(r.getString("password"));  
-                m.setNom(r.getString("nom"));  
-                m.setPrenom(r.getString("prenom"));  
-                m.setEmail(r.getString("email"));  
-                m.setAvatar(r.getString("avatar"));  
-                m.getAdresse().setNumero(r.getString("adresse_numero"));  
-                m.getAdresse().setRue1(r.getString("adresse_rue1"));  
-                m.getAdresse().setRue2(r.getString("adresse_rue2"));  
-                m.getAdresse().setAppartement(r.getString("adresse_appartement"));  
-                m.getAdresse().setVille(r.getString("adresse_ville"));  
-                m.getAdresse().setCodePostal(r.getString("adresse_codePostal"));  
-                m.getAdresse().setProvince(r.getString("adresse_province"));  
-                m.getAdresse().setPays(r.getString("adresse_pays"));
+                try {
+                    m.setUsername(new String(r.getString("username").getBytes("UTF-8"), "ISO-8859-1"));
+                    m.setPassword(r.getString("password"));  
+                    m.setNom(new String(r.getString("nom").getBytes("UTF-8"), "ISO-8859-1"));
+                    m.setPrenom(new String(r.getString("prenom").getBytes("UTF-8"), "ISO-8859-1"));
+                    m.setEmail(r.getString("email"));  
+                    m.setAvatar(r.getString("avatar"));  
+                    m.getAdresse().setNumero(r.getString("adresse_numero"));  
+                    m.getAdresse().setRue1(r.getString("adresse_rue1"));  
+                    m.getAdresse().setRue2(r.getString("adresse_rue2"));  
+                    m.getAdresse().setAppartement(r.getString("adresse_appartement"));  
+                    m.getAdresse().setVille(new String(r.getString("adresse_ville").getBytes("UTF-8"), "ISO-8859-1"));
+                    m.getAdresse().setCodePostal(r.getString("adresse_codePostal"));  
+                    m.getAdresse().setProvince(new String(r.getString("adresse_province").getBytes("UTF-8"), "ISO-8859-1"));
+                    m.getAdresse().setPays(new String(r.getString("adresse_pays").getBytes("UTF-8"), "ISO-8859-1"));
+                } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                }
                 r.close();
                 stm.close();
                 return m;

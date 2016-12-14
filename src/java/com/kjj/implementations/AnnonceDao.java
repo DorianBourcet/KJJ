@@ -158,15 +158,19 @@ public class AnnonceDao extends Dao<Annonce>{
                     a = Factory.getAnnonce();
                 stm = cnx.prepareStatement("SELECT * FROM annonce WHERE id = ?");
                 a.setId(r.getInt("id"));  
-                a.setTitre(r.getString("titre"));  
-                a.setDescription(r.getString("description"));  
-                a.setTypeObjet(r.getString("typeObjet"));  
-                a.setPrix(r.getDouble("prix"));  
-                a.getAdresse().setVille(r.getString("adresse_ville"));  
-                a.getAdresse().setCodePostal(r.getString("adresse_codePostal"));  
-                a.getAdresse().setProvince(r.getString("adresse_province"));  
-                a.getAdresse().setPays(r.getString("adresse_pays"));
-                a.setEtatObjet(r.getString("etatObjet"));
+                try {
+                    a.setTitre(new String(r.getString("titre").getBytes("UTF-8"), "ISO-8859-1"));
+                    a.setDescription(new String(r.getString("description").getBytes("UTF-8"), "ISO-8859-1"));
+                    a.setTypeObjet(new String(r.getString("typeObjet").getBytes("UTF-8"), "ISO-8859-1"));
+                    a.setPrix(r.getDouble("prix"));  
+                    a.getAdresse().setVille(new String(r.getString("adresse_ville").getBytes("UTF-8"), "ISO-8859-1"));
+                    a.getAdresse().setCodePostal(r.getString("adresse_codePostal"));  
+                    a.getAdresse().setProvince(new String(r.getString("adresse_province").getBytes("UTF-8"), "ISO-8859-1"));
+                    a.getAdresse().setPays(new String(r.getString("adresse_pays").getBytes("UTF-8"), "ISO-8859-1"));
+                    a.setEtatObjet(new String(r.getString("etatObjet").getBytes("UTF-8"), "ISO-8859-1"));
+                } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                }
                 a.setDateCreation(r.getTimestamp("date"));
                 a.setIdMembre(r.getInt("idMembre"));
                 if (!r.getString("typeObjet").equals("null")) {
@@ -281,46 +285,6 @@ public class AnnonceDao extends Dao<Annonce>{
         }
         return liste;
     }*/
-    
-    public Annonce find(int id) {
-        String strId = Integer.toString(id);
-        PreparedStatement stm = null;
-        try {
-            stm = cnx.prepareStatement("SELECT * FROM annonce WHERE id = ?");
-            stm.setString(1,strId);
-            ResultSet r = stm.executeQuery();
-            if (r.next()) {
-                Annonce a = Factory.getAnnonce();
-                a.setId(r.getInt("id"));  
-                a.setTitre(r.getString("titre"));  
-                a.setDescription(r.getString("description"));  
-                a.setTypeObjet(r.getString("typeObjet"));
-                a.setTypeObjet(r.getString("prix")); 
-                a.getAdresse().setVille(r.getString("adresse_ville"));  
-                a.getAdresse().setCodePostal(r.getString("adresse_codePostal"));  
-                a.getAdresse().setProvince(r.getString("adresse_province"));  
-                a.getAdresse().setPays(r.getString("adresse_pays"));
-                a.setEtatObjet(r.getString("etatObjet"));
-                a.setDateCreation(r.getTimestamp("date"));
-                a.setIdMembre(r.getInt("idMembre"));
-             // a.setExpiree(r.getBoolean("etat"));
-                r.close();
-                stm.close();
-                return a;
-            }
-        } catch (SQLException exp) {
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
 
     @Override
     public boolean update(Annonce a) {
