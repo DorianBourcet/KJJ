@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 13 Décembre 2016 à 03:25
+-- Généré le :  Mer 14 Décembre 2016 à 05:40
 -- Version du serveur :  5.7.11
 -- Version de PHP :  5.6.18
 
@@ -91,7 +91,12 @@ INSERT INTO `annonce` (`id`, `titre`, `description`, `typeObjet`, `prix`, `adres
 (72, 'Pneus neige', 'Lot de 4 pneus neige bon état', 'null', 120, 'Montréal', 'H1T1T1', 'QC', 'Canada', 'occasion', '2016-12-13 02:07:50', 28, NULL),
 (73, 'Pneus hiver', 'Lot de 4 pneus neige bon état', 'null', 120, 'Montréal', 'H1T1T1', 'QC', 'Canada', 'occasion', '2016-12-13 02:08:14', 25, NULL),
 (74, 'Manteau hiver bleu', 'Canada Goose', 'null', 120, 'Montréal', 'H1T1T1', 'QC', 'Canada', 'occasion', '2016-12-13 02:08:50', 25, NULL),
-(75, 'Horloge murale', 'Horloge murale à affichage numérique', 'null', 100, 'Montréal', 'H1T1T1', 'QC', 'Canada', 'occasion', '2016-12-13 02:09:28', 25, NULL);
+(75, 'Horloge murale', 'Horloge murale à affichage numérique', 'null', 100, 'Montréal', 'H1T1T1', 'QC', 'Canada', 'occasion', '2016-12-13 02:09:28', 25, NULL),
+(76, 'new 3DS XL', 'Console très bon état, personne soigneuse. Quelques jeux sont en vente aussi, demandez-le moi.', 'null', 130, 'Laval', 'A1T2R3', 'QC', 'Canada', 'Usagé', '2016-12-14 04:48:49', 29, NULL),
+(77, 'iPhone 5', 'iPhone 5 avec accessoires (protection et support voiture) à vendre.', 'null', 170, 'Dollard-des-Ormeaux', 'A1T2R7', 'QC', 'Canada', 'Usagé', '2016-12-14 04:51:28', 29, NULL),
+(78, 'Trépied appareil photo', 'Trépied hauteur max 1m20 pour appareil photo reflex. Bon état général', 'null', 45, 'Sherbrooke', 'G5E6E9', 'QC', 'Canada', 'Usagé', '2016-12-14 04:52:59', 29, NULL),
+(79, 'Guitare Epiphone Casino Cherry', 'Je vends ma guitare, une Épiphone Casino Cherry qui ne me sert plus. Guitare électrique à caisse creuse. Polyvalente, idéale pour débuter.', 'null', 300, 'Trois-Rivières', 'G5E6E7', 'QC', 'Canada', 'Usagé', '2016-12-14 04:57:41', 30, NULL),
+(80, 'Blu-Ray The Matrix Trilogy', 'Jamais ouvert, le coffret est neuf.', 'null', 50, 'Ville de Québec', 'F5E6Q8', 'QC', 'Canada', 'Neuf', '2016-12-14 04:59:30', 30, NULL);
 
 -- --------------------------------------------------------
 
@@ -163,10 +168,12 @@ CREATE TABLE `membre` (
 --
 
 INSERT INTO `membre` (`id`, `username`, `password`, `nom`, `prenom`, `email`, `avatar`, `adresse_numero`, `adresse_rue1`, `adresse_rue2`, `adresse_appartement`, `adresse_ville`, `adresse_codePostal`, `adresse_province`, `adresse_pays`, `quoideneuf`) VALUES
-(24, 'Dodo', 'dodo', 'Dorian', 'Bourcet', 'dodo@dodo.com', '', '5235', 'rue Desmarteau', '', '', 'Montréal', 'H1K 2N7', 'Québec', 'Canada', 0),
+(24, 'Dodo', 'dodo', 'Dorian', 'Bourcet', 'dodo@dodo.com', '', '5235', 'rue Desmarteau', '', '', 'Montréal', 'H1K 2N7', 'Québec', 'Canada', 1),
 (25, 'Toto', 'toto', 'tototo', 'to', '', '', '', '', '', '', '', '', '', 'Canada', 1),
 (26, 'jycy', 'jycy', 'Faul', 'JC', 'jcf', NULL, '445', 'rue BEaubien', '', '5', 'Montréal', 'HiT1T1', 'QC', 'Canada', 1),
-(28, 'Jul', 'jul', 'Jul', 'Jul', 'jul@weshalors.fr', NULL, '', '', '', '', '', '', 'QC', 'Canada', 1);
+(28, 'Jul', 'jul', 'Jul', 'Jul', 'jul@weshalors.fr', NULL, '', '', '', '', '', '', 'QC', 'Canada', 1),
+(29, 'Annie', 'annie', 'Tremblay', 'Annie', 'annie@gmail.com', NULL, '', '', '', '', '', '', 'QC', 'Canada', NULL),
+(30, 'Ali', 'ali', 'Dickens', 'Ali', 'ali@gmail.com', NULL, '', '', '', '', '', '', 'QC', 'Canada', 1);
 
 -- --------------------------------------------------------
 
@@ -211,20 +218,25 @@ INSERT INTO `message` (`id`, `idExpediteur`, `idDestinataire`, `contenu`, `date`
 (21, 28, 25, 'Salut!', '2016-12-13 02:15:06', 1),
 (22, 28, 25, 'Salut!', '2016-12-13 02:15:06', 1),
 (23, 26, 24, 'Salut!!', '2016-12-11 19:03:19', 1),
-(24, 26, 28, 'Salut!!', '2016-12-08 15:04:03', 0),
-(25, 26, 25, 'Salut!', '2016-12-08 15:05:11', 0),
-(26, 26, 25, 'Salut!', '2016-12-08 15:05:51', 0),
-(27, 26, 25, 'Salut!', '2016-12-08 15:07:24', 0),
-(28, 26, 25, 'Salut!', '2016-12-08 15:09:18', 0),
+(24, 26, 28, 'Salut!!', '2016-12-13 18:03:52', 1),
+(25, 26, 25, 'Salut!', '2016-12-13 18:03:58', 1),
+(26, 26, 25, 'Salut!', '2016-12-13 18:03:58', 1),
+(27, 26, 25, 'Salut!', '2016-12-13 18:03:58', 1),
+(28, 26, 25, 'Salut!', '2016-12-13 18:03:58', 1),
 (29, 26, 24, 'Salut', '2016-12-11 19:03:19', 1),
 (30, 28, 25, 'Salut!', '2016-12-13 02:15:06', 1),
 (31, 28, 24, 'Salut!', '2016-12-08 15:23:36', 0),
-(32, 26, 28, 'Salut', '2016-12-08 15:36:35', 0),
-(33, 26, 28, 'Salut', '2016-12-08 15:36:39', 0),
+(32, 26, 28, 'Salut', '2016-12-13 18:03:52', 1),
+(33, 26, 28, 'Salut', '2016-12-13 18:03:52', 1),
 (34, 28, 24, 'Wesh alors', '2016-12-11 07:04:29', 0),
 (38, 24, 26, 'Wesh alors', '2016-12-11 19:03:19', 1),
 (39, 28, 25, 'null', '2016-12-13 02:15:06', 1),
-(40, 28, 26, 'Salut JC', '2016-12-13 02:59:55', 0);
+(40, 28, 26, 'Salut JC', '2016-12-13 18:03:52', 1),
+(41, 26, 24, 'fijlwekhfjklwe', '2016-12-13 18:03:44', 1),
+(42, 30, 24, 'Bonjour', '2016-12-14 05:04:04', 1),
+(43, 30, 24, 'Je souhaiterais savoir si vous avez encore des jeux PlayStation4', '2016-12-14 05:07:16', 1),
+(44, 24, 30, 'Malheureusement non', '2016-12-14 05:08:21', 1),
+(45, 24, 30, 'Tout a été vendu', '2016-12-14 05:08:21', 1);
 
 -- --------------------------------------------------------
 
@@ -408,7 +420,7 @@ ALTER TABLE `alerte`
 -- AUTO_INCREMENT pour la table `annonce`
 --
 ALTER TABLE `annonce`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 --
 -- AUTO_INCREMENT pour la table `commentaire`
 --
@@ -428,12 +440,12 @@ ALTER TABLE `favoris`
 -- AUTO_INCREMENT pour la table `membre`
 --
 ALTER TABLE `membre`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT pour la table `notification`
 --
