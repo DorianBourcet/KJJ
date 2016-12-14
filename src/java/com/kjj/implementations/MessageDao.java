@@ -11,6 +11,7 @@ package com.kjj.implementations;
 
 import com.atoudeft.jdbc.dao.Dao;
 import com.kjj.entites.MessagePrive;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,7 +73,11 @@ public class MessageDao extends Dao<MessagePrive> {
                 m.setId(r.getInt("id"));  
                 m.setIdExpediteur(r.getInt("idExpediteur"));  
                 m.setIdDestinataire(r.getInt("idDestinataire"));  
-                m.setContenu(r.getString("contenu"));
+                try {
+                    m.setContenu(new String(r.getString("contenu").getBytes("UTF-8"), "ISO-8859-1"));
+                } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                }
                 m.setDate(r.getTimestamp("date"));
                 m.setLu(r.getByte("lu"));
                 r.close();
@@ -204,11 +209,15 @@ public class MessageDao extends Dao<MessagePrive> {
                 ResultSet r = stm.executeQuery();
                 while (r.next())
                 {
+                    try {
                         MessagePrive mp = new MessagePrive(r.getString("expediteur"),
-                                        r.getString("destinataire"),
-                                        r.getString("contenu"),
-                                        r.getTimestamp("date"));
-                        liste.add(mp);
+                            r.getString("destinataire"),
+                            new String(r.getString("contenu").getBytes("UTF-8"), "ISO-8859-1"),
+                            r.getTimestamp("date"));
+                            liste.add(mp);
+                    } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    }
                 }
                 r.close();
                 stm.close();
